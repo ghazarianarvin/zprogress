@@ -1,4 +1,4 @@
 package com.zprogress.domain.objects;
 
-public class Goal extends Goal {
+public class Goal extends AbstractGoal {
 }

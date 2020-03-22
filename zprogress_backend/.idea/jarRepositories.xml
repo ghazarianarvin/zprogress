@@ -46,5 +46,20 @@
       <option name="name" value="MavenLocal" />
       <option name="url" value="file:/$MAVEN_REPOSITORY$/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven6" />
+      <option name="name" value="maven6" />
+      <option name="url" value="http://repo.spring.io/milestone" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven7" />
+      <option name="name" value="maven7" />
+      <option name="url" value="http://repo.spring.io/snapshot" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven5" />
+      <option name="name" value="maven5" />
+      <option name="url" value="http://repo.spring.io/release" />
+    </remote-repository>
   </component>
 </project>

@@ -1,4 +1,6 @@
 rootProject.name = 'zprogress_backend'
 include 'zprogress_api'
 include 'zprogress_commons'
+include 'zprogress_business'
+include 'zprogress_persistence'
 

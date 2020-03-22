@@ -1,6 +1,6 @@
 package com.zprogress.domain.objects;
 
-public class GoalDTO extends Goal {
+public class GoalDTO extends AbstractGoal {
 
 
 

@@ -20,6 +20,7 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
     compile project(':zprogress_commons')
+    compile project(':zprogress_business')
 }
 
 test {
