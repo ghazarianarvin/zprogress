@@ -15,7 +15,7 @@ public class GoalServiceImpl implements GoalService {
 
     @Override
     public void create(AbstractGoal goal) {
-        this.goalRepository.save(null);
+        this.goalRepository.save(goal);
         LOGGER.info("creating goal object {}", goal.toString());
     }
 

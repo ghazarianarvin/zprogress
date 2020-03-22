@@ -2,7 +2,7 @@ package com.zprogress.domain.objects;
 
 import java.time.LocalDate;
 
-public abstract class AbstractGoal {
+public abstract class AbstractGoal implements DomainObject {
 
     private String name;
     private String description;
