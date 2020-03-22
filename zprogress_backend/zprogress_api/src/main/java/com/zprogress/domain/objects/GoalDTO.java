@@ -1,4 +1,4 @@
-package com.zprogress.domain;
+package com.zprogress.domain.objects;
 
 public class GoalDTO extends Goal {
 
