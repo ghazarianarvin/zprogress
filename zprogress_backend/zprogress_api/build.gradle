@@ -1,8 +1,7 @@
-// https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/html/#packaging-executable
 plugins {
     id 'org.springframework.boot' version '2.2.5.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
-    id 'java'
+    id 'java-library'
 }
 
 configurations {
@@ -19,10 +18,23 @@ dependencies {
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
-    compile project(':zprogress_commons')
-    compile project(':zprogress_business')
+    implementation project(':zprogress_commons')
+    implementation project(':zprogress_business')
 }
 
 test {
     useJUnitPlatform()
+}
+
+jar {
+    archiveBaseName = "zprogress_api"
+    manifest {
+        attributes(
+                "Created-By": System.getProperty('java.version'),
+                "Specification-Title": "Zprogress application",
+                "Implementation-Version": archiveVersion,
+                "Main-Class"         : "com.zprogress.Application",
+                "Class-Path": configurations.compile.collect { it.getName() }.join(' ')
+        )
+    }
 }

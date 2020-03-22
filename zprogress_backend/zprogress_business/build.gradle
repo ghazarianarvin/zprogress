@@ -1,10 +1,16 @@
 plugins {
-    id 'java'
+    id 'org.springframework.boot' version '2.2.5.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java-library'
 }
+
+bootJar.enabled = false
 
 
 dependencies {
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
 
-    compile project(':zprogress_commons')
+    implementation project(':zprogress_commons')
+    implementation project(':zprogress_persistence')
 }

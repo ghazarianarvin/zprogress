@@ -12,7 +12,7 @@ public class DbConfiguration {
     @Bean
     public DataSource dataSource() {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-        dataSourceBuilder.url("jdbc:mysql://localhost:3306/zprogress");
+        dataSourceBuilder.url("jdbc:mysql://localhost:3306/zprogress?serverTimezone=UTC");
         dataSourceBuilder.username("admin");
         dataSourceBuilder.password("admin");
         return dataSourceBuilder.build();
