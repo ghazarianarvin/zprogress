@@ -1,4 +1,4 @@
-package com.zprogress.reporsitorie;
+package com.zprogress.reporsitory;
 
 import com.zprogress.AbstractGoal;
 import com.zprogress.entity.GoalEntity;
@@ -8,7 +8,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GoalRepository extends CrudRepository<GoalEntity, Long> {
 
-    default void save(AbstractGoal goal) {
-//        this.save()
-    }
 }

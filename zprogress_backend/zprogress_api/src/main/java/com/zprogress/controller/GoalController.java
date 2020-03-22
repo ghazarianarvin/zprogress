@@ -1,7 +1,7 @@
 package com.zprogress.controller;
 
-import com.zprogress.domain.objects.GoalDTO;
-import com.zprogress.domain.services.GoalService;
+import com.zprogress.dto.GoalDTO;
+import com.zprogress.service.GoalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

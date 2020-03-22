@@ -1,6 +1,6 @@
-package com.zprogress.domain.services;
+package com.zprogress.service;
 
-import com.zprogress.domain.objects.AbstractGoal;
+import com.zprogress.AbstractGoal;
 
 public interface GoalService {
 

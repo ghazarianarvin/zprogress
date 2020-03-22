@@ -1,8 +1,9 @@
-package com.zprogress.domain.objects;
+package com.zprogress;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public abstract class AbstractGoal implements DomainObject {
+public abstract class AbstractGoal implements Serializable {
 
     private String name;
     private String description;

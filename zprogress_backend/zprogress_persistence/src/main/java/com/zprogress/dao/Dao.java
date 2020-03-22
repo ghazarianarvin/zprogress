@@ -1,4 +1,6 @@
 package com.zprogress.dao;
 
-public class Dao {
+public interface Dao<T> {
+
+    void save(T object);
 }

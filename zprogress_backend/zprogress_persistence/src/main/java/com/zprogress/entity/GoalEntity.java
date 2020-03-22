@@ -1,4 +1,6 @@
-package com.zprogress.domain.objects;
+package com.zprogress.entity;
+
+import com.zprogress.AbstractGoal;
 
 import javax.persistence.*;
 
@@ -7,6 +9,6 @@ import javax.persistence.*;
 public class GoalEntity extends AbstractGoal {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 }
