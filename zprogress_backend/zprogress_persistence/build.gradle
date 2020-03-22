@@ -1,13 +1,22 @@
 plugins {
     id 'org.springframework.boot' version '2.2.5.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id "org.flywaydb.flyway" version "6.3.1"
     id 'java'
 }
 
+bootJar.enabled = false
+
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
-    //implementation 'org.flywaydb:flyway-core'
-    //runtimeOnly 'mysql:mysql-connector-java'
+    implementation 'org.flywaydb:flyway-core'
+    runtimeOnly 'mysql:mysql-connector-java'
 
     compile project(':zprogress_commons')
+}
+
+flyway {
+    url = 'jdbc:mysql://localhost:3306/zprogress?serverTimezone=UTC'
+    user = 'admin'
+    password = 'admin'
 }

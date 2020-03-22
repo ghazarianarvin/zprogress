@@ -1,4 +1,4 @@
-package com.zprogress;
+package com.zprogress.config;
 
 import com.zprogress.domain.services.GoalService;
 import com.zprogress.domain.services.impl.GoalServiceImpl;
