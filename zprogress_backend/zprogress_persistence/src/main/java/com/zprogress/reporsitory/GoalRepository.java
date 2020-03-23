@@ -1,11 +1,40 @@
 package com.zprogress.reporsitory;
 
-import com.zprogress.AbstractGoal;
-import com.zprogress.entity.GoalEntity;
-import org.springframework.data.repository.CrudRepository;
+import com.zprogress.Goal;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface GoalRepository extends CrudRepository<GoalEntity, Long> {
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 
+@Repository
+public class GoalRepository extends AbstractRepository<Goal> {
+
+    public static final String INSERT_GOAL = "INSERT INTO GOAL (name, description, deadline) values (?, ?, ?)";
+
+    @Override
+    public Goal create(Goal goal) {
+        KeyHolder idHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection
+                    .prepareStatement(INSERT_GOAL, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, goal.getName());
+            ps.setString(2, goal.getDescription());
+            ps.setObject(3, goal.getDeadline());
+            return ps;
+        }, idHolder);
+        goal.setId(idHolder.getKey().longValue());
+        return goal;
+    }
+
+    @Override
+    public void udpate(Goal object) {
+
+    }
+
+    @Override
+    public void delete(Goal object) {
+
+    }
 }

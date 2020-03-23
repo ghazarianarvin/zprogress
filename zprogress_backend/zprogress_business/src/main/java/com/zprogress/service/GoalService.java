@@ -1,8 +1,8 @@
 package com.zprogress.service;
 
-import com.zprogress.AbstractGoal;
+import com.zprogress.Goal;
 
 public interface GoalService {
 
-    void create(AbstractGoal goal);
+    Goal create(Goal goal);
 }

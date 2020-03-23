@@ -3,11 +3,20 @@ package com.zprogress;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-public abstract class AbstractGoal implements Serializable {
+public class Goal implements Serializable {
 
+    private Long id;
     private String name;
     private String description;
     private LocalDate deadline;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -35,8 +44,9 @@ public abstract class AbstractGoal implements Serializable {
 
     @Override
     public String toString() {
-        return "Goal{" +
-                "name='" + name + '\'' +
+        return "AbstractGoal{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", deadline=" + deadline +
                 '}';

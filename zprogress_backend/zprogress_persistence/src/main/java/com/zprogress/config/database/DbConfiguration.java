@@ -13,6 +13,7 @@ public class DbConfiguration {
     public DataSource dataSource() {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.url("jdbc:mysql://localhost:3306/zprogress?serverTimezone=UTC");
+        dataSourceBuilder.driverClassName("com.mysql.cj.jdbc.Driver");
         dataSourceBuilder.username("admin");
         dataSourceBuilder.password("admin");
         return dataSourceBuilder.build();
