@@ -1,6 +1,6 @@
 package com.zprogress.reporsitory;
 
-import com.zprogress.Goal;
+import com.zprogress.domain.Goal;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -15,7 +15,7 @@ public class GoalRepository extends AbstractRepository<Goal> {
 
     @Override
     public Goal create(Goal goal) {
-        KeyHolder idHolder = new GeneratedKeyHolder();
+        var idHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection
                     .prepareStatement(INSERT_GOAL, Statement.RETURN_GENERATED_KEYS);

@@ -21,3 +21,15 @@ dependencies {
     implementation project(':zprogress_commons')
     implementation project(':zprogress_persistence')
 }
+
+// TODO put into parent build
+compileJava {
+    inputs.property("moduleName", 'business')
+    doFirst {
+        options.compilerArgs = [
+                '-proc:none',
+                '--module-path', classpath.asPath,
+        ]
+        classpath = files()
+    }
+}

@@ -18,8 +18,21 @@ dependencies {
     implementation project(':zprogress_commons')
 }
 
+// TODO put into parent build
+compileJava {
+    inputs.property("moduleName", 'persistence')
+    doFirst {
+        options.compilerArgs = [
+                '-proc:none',
+                '--module-path', classpath.asPath,
+        ]
+        classpath = files()
+    }
+}
+
 flyway {
     url = 'jdbc:mysql://localhost:3306/zprogress?serverTimezone=UTC'
     user = 'admin'
     password = 'admin'
+    validateOnMigrate = false
 }

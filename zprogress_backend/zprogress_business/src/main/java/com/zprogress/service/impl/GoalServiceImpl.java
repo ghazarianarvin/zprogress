@@ -1,6 +1,6 @@
 package com.zprogress.service.impl;
 
-import com.zprogress.Goal;
+import com.zprogress.domain.Goal;
 import com.zprogress.reporsitory.GoalRepository;
 import com.zprogress.service.GoalService;
 import org.slf4j.Logger;
