@@ -1,7 +1,0 @@
-com\zprogress\domain\services\GoalService.class
-com\zprogress\domain\Goal.class
-module-info.class
-com\zprogress\domain\Step.class
-com\zprogress\domain\Repetition.class
-com\zprogress\domain\repository\GoalRepository.class
-com\zprogress\domain\repository\CommonRepository.class

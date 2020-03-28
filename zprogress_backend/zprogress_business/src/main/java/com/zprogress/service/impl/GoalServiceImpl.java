@@ -11,7 +11,7 @@ public class GoalServiceImpl implements GoalService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GoalServiceImpl.class);
 
-    private GoalRepository<Goal> goalRepository;
+    private GoalRepository goalRepository;
 
     public GoalServiceImpl(GoalRepository goalRepository) {
         this.goalRepository = goalRepository;

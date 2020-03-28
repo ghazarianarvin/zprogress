@@ -26,6 +26,7 @@
         <spring.hateoas.version>1.0.4.RELEASE</spring.hateoas.version>
         <mysql.version>8.0.19</mysql.version>
         <lombok.version>1.18.12</lombok.version>
+        <flyway.version>6.3.2</flyway.version>
     </properties>
 
     <modules>

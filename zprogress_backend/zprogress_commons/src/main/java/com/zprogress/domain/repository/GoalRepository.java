@@ -1,4 +1,6 @@
 package com.zprogress.domain.repository;
 
-public interface GoalRepository<T> extends CommonRepository<T> {
+import com.zprogress.domain.Goal;
+
+public interface GoalRepository extends CommonRepository<Goal> {
 }

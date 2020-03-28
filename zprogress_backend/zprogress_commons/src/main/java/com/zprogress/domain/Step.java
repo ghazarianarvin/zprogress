@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 public class Step {
 
     private Long id;
+    private Goal goal;
 
     @NotNull
     @NotBlank
@@ -35,6 +36,14 @@ public class Step {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Goal getGoal() {
+        return goal;
+    }
+
+    public void setGoal(Goal goal) {
+        this.goal = goal;
     }
 
     public String getName() {

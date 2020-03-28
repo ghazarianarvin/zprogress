@@ -96,6 +96,21 @@
                     </archive>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>${flyway.version}</version>
+                <configuration>
+                    <user>admin</user>
+                    <password>admin</password>
+                    <url>jdbc:mysql://localhost:3306/zprogress?serverTimezone=UTC</url>
+                    <driver>com.mysql.cj.jdbc.Driver</driver>
+                    <cleanOnValidationError>true</cleanOnValidationError>
+                    <schemas>
+                        <schema>zprogress</schema>
+                    </schemas>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

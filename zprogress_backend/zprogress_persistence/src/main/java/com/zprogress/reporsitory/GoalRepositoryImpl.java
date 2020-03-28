@@ -8,12 +8,11 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 
 import javax.sql.DataSource;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class GoalRepositoryImpl extends AbstractRepository implements GoalRepository<Goal> {
+public class GoalRepositoryImpl extends AbstractRepository implements GoalRepository{
 
     public static final String INSERT_GOAL = "INSERT INTO GOAL (name, description, deadline) values (?, ?, ?)";
     private static final String SELECT_GOAL = "SELECT id, name, description, deadline from GOAL WHERE id = ?";
@@ -27,7 +26,7 @@ public class GoalRepositoryImpl extends AbstractRepository implements GoalReposi
     public Goal create(Goal goal) {
         var idHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection
+            var ps = connection
                     .prepareStatement(INSERT_GOAL, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, goal.getName());
             ps.setString(2, goal.getDescription());
