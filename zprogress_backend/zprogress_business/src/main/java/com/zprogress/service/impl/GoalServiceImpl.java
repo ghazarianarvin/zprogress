@@ -5,7 +5,6 @@ import com.zprogress.domain.repository.GoalRepository;
 import com.zprogress.domain.services.GoalService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 public class GoalServiceImpl implements GoalService {
@@ -14,7 +13,6 @@ public class GoalServiceImpl implements GoalService {
 
     private GoalRepository<Goal> goalRepository;
 
-    @Autowired
     public GoalServiceImpl(GoalRepository goalRepository) {
         this.goalRepository = goalRepository;
     }
