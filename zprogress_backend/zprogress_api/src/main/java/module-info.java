@@ -7,6 +7,7 @@ module api {
     requires spring.hateoas;
 
     exports com.zprogress.controller;
-    exports com.zprogress.dto;
+
+    opens com.zprogress.controller to spring.core;
 
 }

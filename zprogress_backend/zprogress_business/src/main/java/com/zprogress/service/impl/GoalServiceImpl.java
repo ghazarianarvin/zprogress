@@ -25,4 +25,9 @@ public class GoalServiceImpl implements GoalService {
         return this.goalRepository.create(goal);
     }
 
+    @Override
+    public Goal get(Long id) {
+        return goalRepository.getById(id);
+    }
+
 }
