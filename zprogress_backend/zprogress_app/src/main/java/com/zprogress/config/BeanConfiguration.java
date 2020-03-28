@@ -15,9 +15,7 @@ public class BeanConfiguration {
 
     @Bean
     public GoalRepository<Goal> goalRepository(DataSource dataSource) {
-        GoalRepositoryImpl goalRepository = new GoalRepositoryImpl();
-        goalRepository.setDataSource(dataSource);
-        return goalRepository;
+        return new GoalRepositoryImpl(dataSource);
     }
 
     @Bean

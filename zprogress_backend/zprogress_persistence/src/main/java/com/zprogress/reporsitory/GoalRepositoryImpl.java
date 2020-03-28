@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 
+import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,8 +17,11 @@ public class GoalRepositoryImpl extends AbstractRepository implements GoalReposi
 
     public static final String INSERT_GOAL = "INSERT INTO GOAL (name, description, deadline) values (?, ?, ?)";
     private static final String SELECT_GOAL = "SELECT id, name, description, deadline from GOAL WHERE id = ?";
-
     private static final GoalResultSetHandler goalResultSetHandler = new GoalResultSetHandler();
+
+    public GoalRepositoryImpl(DataSource dataSource) {
+        super(dataSource);
+    }
 
     @Override
     public Goal create(Goal goal) {
