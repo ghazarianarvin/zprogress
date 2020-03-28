@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <annotationProcessing>
-      <profile name="Maven default annotation processors profile" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="zprogress_backend.zprogress_commons" />
-        <module name="zprogress_backend.zprogress_business" />
-        <module name="zprogress_app" />
-        <module name="zprogress_backend.zprogress_api" />
-        <module name="zprogress_backend.zprogress_persistence" />
-      </profile>
-    </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="zprogress_backend.main" target="11" />
       <module name="zprogress_backend.test" target="11" />

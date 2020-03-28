@@ -1,17 +1,15 @@
 module app {
-    requires spring.boot;
-    requires spring.boot.autoconfigure;
+    requires commons;
+    requires persistence;
+    requires business;
+    requires api;
+
     requires spring.context;
     requires java.sql;
     requires jdk.unsupported;
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.classmate;
-
-    requires commons;
-    requires persistence;
-    requires business;
-    requires api;
 
     exports com.zprogress;
     exports com.zprogress.config;
