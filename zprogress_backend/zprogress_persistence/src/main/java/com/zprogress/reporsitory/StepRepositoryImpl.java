@@ -15,8 +15,8 @@ import java.sql.Statement;
 public class StepRepositoryImpl extends AbstractRepository implements StepRepository {
 
     public static final String INSERT_STEP =
-            "INSERT INTO STEP (goal_id, name, importance, startDate, repetitionType) " +
-            "values (?, ?, ?, ?, ?)";
+            "INSERT INTO STEP (goal_id, name, importance, startDate, repetitionType, nextReminderDate) " +
+            "values (?, ?, ?, ?, ?, ?)";
 
     public StepRepositoryImpl(DataSource dataSource) {
         super(dataSource);
@@ -33,6 +33,7 @@ public class StepRepositoryImpl extends AbstractRepository implements StepReposi
             ps.setInt(3, step.getImportance());
             ps.setObject(4, step.getStartDate());
             ps.setString(5, step.getRepetitionType().name());
+            ps.setObject(6, step.getNextReminderDate());
             return ps;
         }, idHolder);
         step.setId(idHolder.getKey().longValue());

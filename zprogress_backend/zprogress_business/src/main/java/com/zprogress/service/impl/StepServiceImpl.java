@@ -1,11 +1,14 @@
 package com.zprogress.service.impl;
 
 import com.zprogress.domain.Goal;
+import com.zprogress.domain.Repetition;
 import com.zprogress.domain.Step;
 import com.zprogress.domain.exception.GoalNotFoundValidationException;
 import com.zprogress.domain.repository.GoalRepository;
 import com.zprogress.domain.repository.StepRepository;
 import com.zprogress.domain.services.StepService;
+import com.zprogress.reminder.ReminderCalculator;
+import com.zprogress.reminder.ReminderCalculatorFactory;
 import org.springframework.transaction.annotation.Transactional;
 
 public class StepServiceImpl implements StepService {
@@ -26,7 +29,16 @@ public class StepServiceImpl implements StepService {
             throw new GoalNotFoundValidationException(goalId);
         }
         step.setGoal(goal);
+
+        Repetition repetition = step.getRepetitionType();
+        ReminderCalculator reminderCalculator = getReminderCalculator(repetition);
+        step.setNextReminderDate(reminderCalculator.calculateNextReminderDateTime());
+
         return stepRepository.create(step);
+    }
+
+    private ReminderCalculator getReminderCalculator(Repetition repetition) {
+        return ReminderCalculatorFactory.reminderCalculatorFor(repetition);
     }
 
     @Override

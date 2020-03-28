@@ -15,7 +15,7 @@ CREATE TABLE step
     importance       INT                NOT NULL,
     startDate        DATE               NOT NULL,
     repetitionType   VARCHAR(7)         NOT NULL,
-    nextReminderDate DATETIME               NULL,
+    nextReminderDate DATETIME           NOT NULL,
     PRIMARY KEY (id),
     INDEX goal_id_fk_idx (goal_id ASC) VISIBLE,
     CONSTRAINT goal_id_fk
