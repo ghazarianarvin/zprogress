@@ -3,7 +3,6 @@ package com.zprogress.controller;
 import com.zprogress.domain.Goal;
 import com.zprogress.domain.services.GoalService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +13,8 @@ public class GoalController {
     private GoalService goalService;
 
     @PostMapping("/goal")
-    public ResponseEntity<?> create(@RequestBody EntityModel<Goal> goal) {
-        Goal newGoal = goalService.create(goal.getContent());
+    public ResponseEntity<GoalEntityModel> create(@RequestBody Goal goal) {
+        Goal newGoal = goalService.create(goal);
         return new ResponseEntity<GoalEntityModel>(new GoalEntityModel(newGoal), HttpStatus.CREATED);
     }
 

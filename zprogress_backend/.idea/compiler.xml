@@ -2,31 +2,18 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="zprogress_backend.zprogress_commons" />
         <module name="zprogress_backend.zprogress_business" />
         <module name="zprogress_app" />
+        <module name="zprogress_backend.zprogress_commons" />
         <module name="zprogress_backend.zprogress_api" />
         <module name="zprogress_backend.zprogress_persistence" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="zprogress_backend.main" target="11" />
-      <module name="zprogress_backend.test" target="11" />
-      <module name="zprogress_backend.zprogress_api.main" target="11" />
-      <module name="zprogress_backend.zprogress_api.test" target="11" />
-      <module name="zprogress_backend.zprogress_business.main" target="11" />
-      <module name="zprogress_backend.zprogress_business.test" target="11" />
-      <module name="zprogress_backend.zprogress_commons.main" target="11" />
-      <module name="zprogress_backend.zprogress_commons.test" target="11" />
-      <module name="zprogress_backend.zprogress_dummy.main" target="11" />
-      <module name="zprogress_backend.zprogress_dummy.test" target="11" />
-      <module name="zprogress_backend.zprogress_persistence.main" target="11" />
-      <module name="zprogress_backend.zprogress_persistence.test" target="11" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

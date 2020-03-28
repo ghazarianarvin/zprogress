@@ -52,7 +52,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>${compilePlugin.version}</version>
+                <version>${compile-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>3rdparty-dependencies</id>
@@ -87,7 +87,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>${jarPlugin.version}</version>
+                <version>${jar-plugin.version}</version>
                 <configuration>
                     <archive>
                         <manifest>

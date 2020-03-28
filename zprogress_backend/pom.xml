@@ -20,16 +20,12 @@
         <java.version>11</java.version>
         <package-name>com.zprogress</package-name>
         <main-class>Application</main-class>
-        <!-- Dependency versions -->
-        <!--<feign.version>10.4.0</feign.version>
-        <jaxb.version>2.3.0</jaxb.version>
-        <jjwt.version>0.10.7</jjwt.version>-->
-        <!-- TODO unify -->
         <surefire.version>3.0.0-M3</surefire.version>
-        <jarPlugin.version>3.1.2</jarPlugin.version>
-        <compilePlugin.version>3.1.2</compilePlugin.version>
-        <spring.hateoas>1.0.4.RELEASE</spring.hateoas>
+        <jar-plugin.version>3.1.2</jar-plugin.version>
+        <compile-plugin.version>3.1.2</compile-plugin.version>
+        <spring.hateoas.version>1.0.4.RELEASE</spring.hateoas.version>
         <mysql.version>8.0.19</mysql.version>
+        <lombok.version>1.18.12</lombok.version>
     </properties>
 
     <modules>

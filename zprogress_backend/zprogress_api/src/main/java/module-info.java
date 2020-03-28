@@ -6,6 +6,7 @@ module api {
     requires spring.web;
     requires spring.beans;
     requires spring.hateoas;
+    requires spring.context;
 
     exports com.zprogress.controller;
     opens com.zprogress.controller to spring.core;
