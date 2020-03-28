@@ -11,10 +11,6 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/zprogress_api" />
-            <option value="$PROJECT_DIR$/zprogress_business" />
-            <option value="$PROJECT_DIR$/zprogress_commons" />
-            <option value="$PROJECT_DIR$/zprogress_persistence" />
           </set>
         </option>
         <option name="useAutoImport" value="true" />
