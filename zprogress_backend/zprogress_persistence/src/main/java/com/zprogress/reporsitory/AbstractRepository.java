@@ -5,7 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
 
-public abstract class AbstractRepository<T> {
+public abstract class AbstractRepository {
 
     protected JdbcTemplate jdbcTemplate;
 
@@ -14,9 +14,7 @@ public abstract class AbstractRepository<T> {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    abstract T create(T object);
-    abstract void udpate(T object);
-    abstract void delete(T object);
+
 
 
 }

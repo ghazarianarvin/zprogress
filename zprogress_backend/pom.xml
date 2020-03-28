@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.zprogress</groupId>
+    <artifactId>zprogress_backend</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.6.RELEASE</version>
+        <relativePath/>
+    </parent>
+
+    <properties>
+        <java.version>11</java.version>
+        <package-name>com.zprogress</package-name>
+        <main-class>Application</main-class>
+        <!-- Dependency versions -->
+        <!--<feign.version>10.4.0</feign.version>
+        <jaxb.version>2.3.0</jaxb.version>
+        <jjwt.version>0.10.7</jjwt.version>-->
+        <!-- TODO unify -->
+        <surefire.version>3.0.0-M3</surefire.version>
+        <jarPlugin.version>3.1.2</jarPlugin.version>
+        <compilePlugin.version>3.1.2</compilePlugin.version>
+        <spring.hateoas>1.0.4.RELEASE</spring.hateoas>
+        <mysql.version>8.0.19</mysql.version>
+    </properties>
+
+    <modules>
+        <module>zprogress_commons</module>
+        <module>zprogress_persistence</module>
+        <module>zprogress_business</module>
+        <module>zprogress_api</module>
+        <module>zprogress_app</module>
+    </modules>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${surefire.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    
+</project>

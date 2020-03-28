@@ -1,0 +1,3 @@
+module-info.class
+com\zprogress\controller\GoalController.class
+com\zprogress\dto\GoalDTO.class

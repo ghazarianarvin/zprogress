@@ -1,20 +1,23 @@
 package com.zprogress.service.impl;
 
 import com.zprogress.domain.Goal;
-import com.zprogress.reporsitory.GoalRepository;
-import com.zprogress.service.GoalService;
+import com.zprogress.domain.repository.GoalRepository;
+import com.zprogress.domain.services.GoalService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
 public class GoalServiceImpl implements GoalService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GoalServiceImpl.class);
 
-    private GoalRepository goalRepository;
+    private GoalRepository<Goal> goalRepository;
+
+    @Autowired
+    public GoalServiceImpl(GoalRepository goalRepository) {
+        this.goalRepository = goalRepository;
+    }
 
     @Transactional
     @Override
@@ -22,8 +25,4 @@ public class GoalServiceImpl implements GoalService {
         return this.goalRepository.create(goal);
     }
 
-    @Autowired
-    public void setGoalRepository(GoalRepository goalRepository) {
-        this.goalRepository = goalRepository;
-    }
 }

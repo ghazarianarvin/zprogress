@@ -1,0 +1,8 @@
+CREATE TABLE goal
+(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description VARCHAR(10000) NOT NULL,
+    deadline DATE NOT NULL
+)
+AUTO_INCREMENT = 1;

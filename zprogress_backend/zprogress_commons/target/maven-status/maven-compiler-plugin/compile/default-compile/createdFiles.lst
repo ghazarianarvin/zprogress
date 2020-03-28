@@ -1,0 +1,5 @@
+com\zprogress\domain\services\GoalService.class
+com\zprogress\domain\Goal.class
+com\zprogress\domain\repository\GoalRepository.class
+module-info.class
+com\zprogress\domain\repository\CommonRepository.class
