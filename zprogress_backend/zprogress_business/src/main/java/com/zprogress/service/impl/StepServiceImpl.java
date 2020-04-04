@@ -30,9 +30,10 @@ public class StepServiceImpl implements StepService {
         }
         step.setGoal(goal);
 
-        Repetition repetition = step.getRepetitionType();
+        var repetition = step.getRepetitionType();
+        var startDate = step.getStartDate();
         ReminderCalculator reminderCalculator = getReminderCalculator(repetition);
-        step.setNextReminderDate(reminderCalculator.calculateNextReminderDateTime());
+        step.setNextReminderDate(reminderCalculator.calculateNextReminderDateTime(startDate));
 
         return stepRepository.create(step);
     }

@@ -36,6 +36,7 @@
             <artifactId>spring-hateoas</artifactId>
             <version>${spring.hateoas.version}</version>
         </dependency>
+
     </dependencies>
 
 </project>

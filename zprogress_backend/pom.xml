@@ -27,6 +27,8 @@
         <mysql.version>8.0.19</mysql.version>
         <lombok.version>1.18.12</lombok.version>
         <flyway.version>6.3.2</flyway.version>
+        <jjwt.version>0.9.1</jjwt.version>
+        <jaxb.version>2.3.1</jaxb.version>
     </properties>
 
     <modules>

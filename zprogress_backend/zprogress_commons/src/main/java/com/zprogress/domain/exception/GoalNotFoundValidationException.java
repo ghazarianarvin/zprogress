@@ -9,7 +9,7 @@ public class GoalNotFoundValidationException extends Exception {
         this.goalId = goalId;
     }
 
-    public java.lang.Long getGoalId() {
+    public Long getGoalId() {
         return goalId;
     }
 }

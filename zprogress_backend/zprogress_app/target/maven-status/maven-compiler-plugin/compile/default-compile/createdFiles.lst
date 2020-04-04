@@ -2,3 +2,7 @@ com\zprogress\config\BeanConfiguration.class
 com\zprogress\Application.class
 module-info.class
 com\zprogress\config\DataSourceConfiguration.class
+com\zprogress\security\UserDetailsServiceImpl.class
+com\zprogress\config\HateoasConfiguration.class
+com\zprogress\security\User.class
+com\zprogress\security\SecurityConfigurer.class

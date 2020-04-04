@@ -8,12 +8,16 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="zprogress_backend.zprogress_business" />
-        <module name="zprogress_app" />
-        <module name="zprogress_backend.zprogress_commons" />
-        <module name="zprogress_backend.zprogress_api" />
+        <module name="zprogress_security" />
         <module name="zprogress_backend.zprogress_persistence" />
+        <module name="zprogress_backend.zprogress_commons" />
+        <module name="zprogress_app" />
+        <module name="zprogress_backend.zprogress_api" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="zprogress_security" target="11" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
@@ -22,6 +26,7 @@
       <module name="zprogress_backend.zprogress_business" options="-parameters" />
       <module name="zprogress_backend.zprogress_commons" options="-parameters" />
       <module name="zprogress_backend.zprogress_persistence" options="-parameters" />
+      <module name="zprogress_security" options="-parameters" />
     </option>
   </component>
 </project>

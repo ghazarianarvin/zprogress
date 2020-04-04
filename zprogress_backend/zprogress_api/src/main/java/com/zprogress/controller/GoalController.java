@@ -15,12 +15,12 @@ public class GoalController {
     @PostMapping("/goal")
     public ResponseEntity<GoalEntityModel> create(@RequestBody Goal goal) {
         Goal newGoal = goalService.create(goal);
-        return new ResponseEntity<GoalEntityModel>(new GoalEntityModel(newGoal), HttpStatus.CREATED);
+        return new ResponseEntity<>(new GoalEntityModel(newGoal), HttpStatus.CREATED);
     }
 
     @GetMapping("/goal/{id}")
-    public ResponseEntity<GoalEntityModel> get(@PathVariable long id) {
-        return new ResponseEntity<GoalEntityModel>(new GoalEntityModel(goalService.get(id)), HttpStatus.ACCEPTED);
+    public ResponseEntity<GoalEntityModel> get(@PathVariable Long id) {
+        return new ResponseEntity<>(new GoalEntityModel(goalService.get(id)), HttpStatus.ACCEPTED);
     }
 
     @Autowired
