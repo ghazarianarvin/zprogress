@@ -11,11 +11,13 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
-public class GoalRepositoryImpl extends AbstractRepository implements GoalRepository{
+public class GoalRepositoryImpl extends AbstractRepository implements GoalRepository {
 
     public static final String INSERT_GOAL = "INSERT INTO GOAL (name, description, deadline) values (?, ?, ?)";
     private static final String SELECT_GOAL = "SELECT id, name, description, deadline from GOAL WHERE id = ?";
+    private static final String SELECT_ALL = "SELECT id, name, description, deadline from GOAL";
     private static final GoalResultSetHandler goalResultSetHandler = new GoalResultSetHandler();
 
     public GoalRepositoryImpl(DataSource dataSource) {
@@ -52,25 +54,34 @@ public class GoalRepositoryImpl extends AbstractRepository implements GoalReposi
         return jdbcTemplate.query(SELECT_GOAL, (ResultSetExtractor<Goal>) goalResultSetHandler, id);
     }
 
+    @Override
+    public List<Goal> getAll() {
+        return jdbcTemplate.query(SELECT_ALL, (RowMapper<Goal>) goalResultSetHandler);
+    }
+
 
     private static class GoalResultSetHandler implements RowMapper<Goal>, ResultSetExtractor<Goal> {
 
         @Override
         public Goal mapRow(ResultSet resultSet, int i) throws SQLException {
-            throw new UnsupportedOperationException();
+            return extractSingleRow(resultSet);
         }
 
         @Override
         public Goal extractData(ResultSet resultSet) throws SQLException, DataAccessException {
             if (resultSet.next()) {
-                Goal goal = new Goal();
-                goal.setId(resultSet.getLong(1));
-                goal.setName(resultSet.getString(2));
-                goal.setDescription(resultSet.getString(3));
-                goal.setDeadline(resultSet.getDate(4).toLocalDate());
-                return goal;
+                return extractSingleRow(resultSet);
             }
             return null;
+        }
+
+        private Goal extractSingleRow(ResultSet resultSet) throws SQLException {
+            Goal goal = new Goal();
+            goal.setId(resultSet.getLong(1));
+            goal.setName(resultSet.getString(2));
+            goal.setDescription(resultSet.getString(3));
+            goal.setDeadline(resultSet.getDate(4).toLocalDate());
+            return goal;
         }
     }
 }

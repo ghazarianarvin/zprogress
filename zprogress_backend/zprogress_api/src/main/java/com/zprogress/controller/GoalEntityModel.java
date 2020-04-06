@@ -9,13 +9,7 @@ public class GoalEntityModel extends EntityModel<Goal> {
 
     public GoalEntityModel(Goal goal) {
         super(goal);
-        add(
-                linkTo(methodOn(GoalController.class).get(goal.getId())).withRel("zprogress:goal")
-                .andAffordance(afford(methodOn(GoalController.class).get(null)))
-        );
-        add(
-                linkTo(methodOn(StepController.class).create(null, goal.getId())).withRel("step")
-                .andAffordance(afford(methodOn(StepController.class).create(null, null)))
-        );
+        add(linkTo(methodOn(GoalController.class).goal(goal.getId())).withSelfRel());
+        add(linkTo(methodOn(StepController.class).create(goal.getId(),null)).withRel("step"));
     }
 }

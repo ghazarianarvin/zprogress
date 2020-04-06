@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class StepRepositoryImpl extends AbstractRepository implements StepRepository {
 
@@ -52,6 +53,11 @@ public class StepRepositoryImpl extends AbstractRepository implements StepReposi
 
     @Override
     public Step getById(Long id) {
+        return null;
+    }
+
+    @Override
+    public List<Step> getAll() {
         return null;
     }
 

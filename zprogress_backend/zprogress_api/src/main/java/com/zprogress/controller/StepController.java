@@ -22,7 +22,7 @@ public class StepController {
     private StepService stepService;
 
     @PostMapping("/step/{goalId}")
-    public ResponseEntity<?> create(@Valid @RequestBody Step step, @Min(1) @PathVariable Long goalId) {
+    public ResponseEntity<?> create(@Min(1) @PathVariable Long goalId, @Valid @RequestBody Step step) {
         try {
             Step newStep = stepService.create(step, goalId);
             return new ResponseEntity<>(new StepEntityModel(newStep), HttpStatus.CREATED);

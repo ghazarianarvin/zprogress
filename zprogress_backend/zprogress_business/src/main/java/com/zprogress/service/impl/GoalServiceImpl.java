@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public class GoalServiceImpl implements GoalService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GoalServiceImpl.class);
@@ -15,6 +17,11 @@ public class GoalServiceImpl implements GoalService {
 
     public GoalServiceImpl(GoalRepository goalRepository) {
         this.goalRepository = goalRepository;
+    }
+
+    @Override
+    public List<Goal> goals() {
+        return goalRepository.getAll();
     }
 
     @Transactional
