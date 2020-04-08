@@ -2,23 +2,18 @@ package com.zprogress.config;
 
 import com.zprogress.domain.repository.GoalRepository;
 import com.zprogress.domain.repository.StepRepository;
+import com.zprogress.domain.repository.UserRepository;
 import com.zprogress.domain.services.GoalService;
 import com.zprogress.domain.services.StepService;
+import com.zprogress.domain.services.UserService;
 import com.zprogress.reporsitory.GoalRepositoryImpl;
 import com.zprogress.reporsitory.StepRepositoryImpl;
-import com.zprogress.security.JwtRequestFilter;
-import com.zprogress.security.JwtTokenService;
-import com.zprogress.security.SecurityConfigurer;
-import com.zprogress.security.UserDetailsServiceImpl;
+import com.zprogress.reporsitory.UserRepositoryImpl;
 import com.zprogress.service.impl.GoalServiceImpl;
 import com.zprogress.service.impl.StepServiceImpl;
+import com.zprogress.service.impl.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
 
@@ -45,34 +40,14 @@ public class BeanConfiguration {
         return new StepServiceImpl(stepRepository, goalRepository);
     }
 
-    //-------------------------- SECURITY ------------------------------------------------------------------------------
     @Bean
-    public UserDetailsService userDetailsService() {
-        return new UserDetailsServiceImpl();
+    public UserRepository userRepository(DataSource dataSource) {
+        return new UserRepositoryImpl(dataSource);
     }
 
     @Bean
-    public WebSecurityConfigurerAdapter webSecurityConfigurerAdapter(UserDetailsService userDetailsService, JwtRequestFilter jwtRequestFilter) {
-        return new SecurityConfigurer(userDetailsService, jwtRequestFilter);
+    public UserService userService(UserRepository userRepository) {
+        return new UserServiceImpl(userRepository);
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager(WebSecurityConfigurerAdapter webSecurityConfigurerAdapter) throws Exception {
-        return webSecurityConfigurerAdapter.authenticationManagerBean();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
-    }
-
-    @Bean
-    public JwtTokenService jwtTokenService() {
-        return new JwtTokenService();
-    }
-
-    @Bean
-    public JwtRequestFilter jwtRequestFilter(JwtTokenService jwtTokenService, UserDetailsService userDetailsService) {
-        return new JwtRequestFilter(jwtTokenService, userDetailsService);
-    }
 }

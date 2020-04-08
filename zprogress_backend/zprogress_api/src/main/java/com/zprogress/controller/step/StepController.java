@@ -1,5 +1,6 @@
-package com.zprogress.controller;
+package com.zprogress.controller.step;
 
+import com.zprogress.controller.ValidationFailedEntityModel;
 import com.zprogress.domain.Step;
 import com.zprogress.domain.exception.GoalNotFoundValidationException;
 import com.zprogress.domain.services.StepService;

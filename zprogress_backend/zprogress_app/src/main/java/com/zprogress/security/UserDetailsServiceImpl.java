@@ -1,25 +1,27 @@
 package com.zprogress.security;
 
+import com.zprogress.domain.User;
+import com.zprogress.domain.services.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private static final Set<UserCredentials> userPassword = new HashSet<>();
+    private UserService userService;
 
-    static {
-        userPassword.add(new UserCredentials("arvin", "mypass"));
+    public UserDetailsServiceImpl(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userPassword.stream()
-                .filter(u -> username.equals(u.getUsername()))
-                .findFirst()
+        return this.userService.findBy(username)
+                .map(this::map)
                 .orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found"));
+    }
+
+    private UserDetails map(User user) {
+        return new UserCredentials(user.getName(), user.getPassword());
     }
 }

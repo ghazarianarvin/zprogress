@@ -14,7 +14,8 @@ public class JwtTokenService {
     private static final Key SIGNATURE_KEY = MacProvider.generateKey(SignatureAlgorithm.HS256);
 
     public String createToken(String username) {
-        Claims claims = Jwts.claims().setSubject(username);
+        Claims claims = Jwts.claims()
+                .setSubject(username);
         Date now = Date.from(Instant.now());
         Date validity = new Date(now.getTime() + 36_000_000);
         return Jwts.builder()

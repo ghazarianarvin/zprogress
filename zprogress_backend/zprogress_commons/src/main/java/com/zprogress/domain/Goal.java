@@ -20,6 +20,8 @@ public class Goal implements Serializable {
     @NotNull
     private LocalDate deadline;
 
+    private String username;
+
     public Long getId() {
         return id;
     }
@@ -52,13 +54,11 @@ public class Goal implements Serializable {
         this.deadline = deadline;
     }
 
-    @Override
-    public String toString() {
-        return "AbstractGoal{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", deadline=" + deadline +
-                '}';
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

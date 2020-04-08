@@ -1,5 +1,6 @@
 package com.zprogress.controller;
 
+import com.zprogress.controller.goal.GoalController;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

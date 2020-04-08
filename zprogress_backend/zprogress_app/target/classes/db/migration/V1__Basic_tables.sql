@@ -1,9 +1,26 @@
+CREATE TABLE user
+(
+    name     VARCHAR(45)        NOT NULL,
+    password VARCHAR(32)        NOT NULL,
+    PRIMARY KEY (name)
+);
+
+insert into user (name, password) values ('arvin', md5('mypass'));
+insert into user (name, password) values ('argin', md5('mypass'));
+insert into user (name, password) values ('awenia', md5('mypass'));
+
 CREATE TABLE goal
 (
     id          INT AUTO_INCREMENT PRIMARY KEY,
     name        VARCHAR(100)   NOT NULL,
     description VARCHAR(10000) NOT NULL,
-    deadline    DATE           NOT NULL
+    deadline    DATE           NOT NULL,
+    user_name   VARCHAR(45)            NOT NULL,
+    CONSTRAINT user_id_fk
+        FOREIGN KEY (user_name)
+            REFERENCES user (name)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION
 )
     AUTO_INCREMENT = 1;
 
@@ -20,8 +37,10 @@ CREATE TABLE step
     INDEX goal_id_fk_idx (goal_id ASC) VISIBLE,
     CONSTRAINT goal_id_fk
         FOREIGN KEY (goal_id)
-            REFERENCES zprogress.goal (id)
+            REFERENCES goal (id)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
 )
     AUTO_INCREMENT = 1;
+
+

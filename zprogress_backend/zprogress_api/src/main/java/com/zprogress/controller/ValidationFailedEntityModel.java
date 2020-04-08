@@ -1,5 +1,6 @@
 package com.zprogress.controller;
 
+import com.zprogress.controller.goal.GoalController;
 import org.springframework.hateoas.EntityModel;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;

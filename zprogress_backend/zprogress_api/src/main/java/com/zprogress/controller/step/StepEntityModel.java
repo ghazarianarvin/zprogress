@@ -1,4 +1,4 @@
-package com.zprogress.controller;
+package com.zprogress.controller.step;
 
 import com.zprogress.domain.Step;
 import org.springframework.hateoas.EntityModel;

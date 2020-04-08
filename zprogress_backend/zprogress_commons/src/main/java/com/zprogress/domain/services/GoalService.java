@@ -11,4 +11,6 @@ public interface GoalService {
     Goal create(Goal goal);
 
     Goal get(Long id);
+
+    List<Goal> goals(String username);
 }

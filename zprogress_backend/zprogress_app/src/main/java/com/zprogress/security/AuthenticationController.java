@@ -19,8 +19,8 @@ public class AuthenticationController {
 
     @PostMapping(value = "/authenticate")
     public ResponseEntity<?> authenticate(HttpServletRequest request) {
-        var username = request.getParameter("username");
-        var password = request.getParameter("password");
+        var username = request.getHeader("username");
+        var password = request.getHeader("password");
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password));
         var authenticatedUser = userDetailsService.loadUserByUsername(username); // actually redundant

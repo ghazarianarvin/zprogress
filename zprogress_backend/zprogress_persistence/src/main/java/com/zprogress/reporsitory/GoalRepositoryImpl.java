@@ -15,9 +15,10 @@ import java.util.List;
 
 public class GoalRepositoryImpl extends AbstractRepository implements GoalRepository {
 
-    public static final String INSERT_GOAL = "INSERT INTO GOAL (name, description, deadline) values (?, ?, ?)";
-    private static final String SELECT_GOAL = "SELECT id, name, description, deadline from GOAL WHERE id = ?";
-    private static final String SELECT_ALL = "SELECT id, name, description, deadline from GOAL";
+    public static final String INSERT_GOAL = "INSERT INTO GOAL (name, description, deadline, user_name) values (?, ?, ?, ?)";
+    private static final String SELECT_GOAL = "SELECT id, name, description, deadline, user_name from GOAL WHERE id = ?";
+    private static final String SELECT_ALL = "SELECT id, name, description, deadline, user_name from GOAL";
+    private static final String SELECT_BY_USERNAME = "SELECT id, name, description, deadline, user_name from GOAL WHERE user_name = ?";
     private static final GoalResultSetHandler goalResultSetHandler = new GoalResultSetHandler();
 
     public GoalRepositoryImpl(DataSource dataSource) {
@@ -33,6 +34,7 @@ public class GoalRepositoryImpl extends AbstractRepository implements GoalReposi
             ps.setString(1, goal.getName());
             ps.setString(2, goal.getDescription());
             ps.setObject(3, goal.getDeadline());
+            ps.setString(4, goal.getUsername());
             return ps;
         }, idHolder);
         goal.setId(idHolder.getKey().longValue());
@@ -59,6 +61,11 @@ public class GoalRepositoryImpl extends AbstractRepository implements GoalReposi
         return jdbcTemplate.query(SELECT_ALL, (RowMapper<Goal>) goalResultSetHandler);
     }
 
+    @Override
+    public List<Goal> findByUsername(String username) {
+        return jdbcTemplate.query(SELECT_BY_USERNAME, (RowMapper<Goal>) goalResultSetHandler, username);
+    }
+
 
     private static class GoalResultSetHandler implements RowMapper<Goal>, ResultSetExtractor<Goal> {
 
@@ -81,6 +88,7 @@ public class GoalRepositoryImpl extends AbstractRepository implements GoalReposi
             goal.setName(resultSet.getString(2));
             goal.setDescription(resultSet.getString(3));
             goal.setDeadline(resultSet.getDate(4).toLocalDate());
+            goal.setUsername(resultSet.getString(5));
             return goal;
         }
     }
