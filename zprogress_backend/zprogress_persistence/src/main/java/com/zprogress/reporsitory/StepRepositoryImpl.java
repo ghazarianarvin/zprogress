@@ -1,5 +1,6 @@
 package com.zprogress.reporsitory;
 
+import com.zprogress.domain.Repetition;
 import com.zprogress.domain.Step;
 import com.zprogress.domain.repository.StepRepository;
 import org.springframework.dao.DataAccessException;
@@ -15,9 +16,13 @@ import java.util.List;
 
 public class StepRepositoryImpl extends AbstractRepository implements StepRepository {
 
-    public static final String INSERT_STEP =
+    private static final String SELECT_BY_GOAL_ID = "SELECT id, goal_id, name, importance, startDate, " +
+            "repetitionType, nextReminderDate from Step WHERE goal_id = ?";
+    private static final String INSERT_STEP =
             "INSERT INTO STEP (goal_id, name, importance, startDate, repetitionType, nextReminderDate) " +
             "values (?, ?, ?, ?, ?, ?)";
+
+    private static final StepResultSetHandler stepResultSetHandler = new StepResultSetHandler();
 
     public StepRepositoryImpl(DataSource dataSource) {
         super(dataSource);
@@ -61,24 +66,35 @@ public class StepRepositoryImpl extends AbstractRepository implements StepReposi
         return null;
     }
 
+    @Override
+    public List<Step> getByGoalId(Long goalId) {
+        return jdbcTemplate.query(SELECT_BY_GOAL_ID, (RowMapper<Step>) stepResultSetHandler, goalId);
+    }
+
     private static class StepResultSetHandler implements RowMapper<Step>, ResultSetExtractor<Step> {
 
         @Override
         public Step mapRow(ResultSet resultSet, int i) throws SQLException {
-            throw new UnsupportedOperationException();
+            return extractSingleRow(resultSet);
         }
 
         @Override
         public Step extractData(ResultSet resultSet) throws SQLException, DataAccessException {
             if (resultSet.next()) {
-//                Step step = new Step();
-//                step.setId(resultSet.getLong(1));
-//                step.setName(resultSet.getString(2));
-//                step.setDescription(resultSet.getString(3));
-//                step.setDeadline(resultSet.getDate(4).toLocalDate());
-//                return step;
+                return extractSingleRow(resultSet);
             }
             return null;
+        }
+
+        private Step extractSingleRow(ResultSet resultSet) throws SQLException {
+            var step = new Step();
+            step.setId(resultSet.getLong(1));
+            step.setName(resultSet.getString(3));
+            step.setImportance(resultSet.getInt(4));
+            step.setStartDate(resultSet.getDate(5).toLocalDate());
+            step.setRepetitionType(Repetition.valueOf(resultSet.getString(6)));
+            step.setNextReminderDate(resultSet.getDate(7).toLocalDate().atTime(0,0));
+            return step;
         }
     }
 }

@@ -21,20 +21,15 @@ public class GoalController {
     private ClientContext clientContext;
     private GoalService goalService;
 
-    /**
-     * TODO
-     * 204 no content -> if empty result set
-     * 200 accepted
-     */
     @GetMapping("/goals")
-    public ResponseEntity<CollectionModel<GoalEntityModel>> goals() {
+    public ResponseEntity<CollectionModel<GoalEntityModel>> allGoals() {
         var goals = goalService.goals(clientContext.getUsername());
         var body = new CollectionModel(goals
                 .stream()
                 .map(goal -> new GoalEntityModel(goal))
                 .collect(Collectors.toList()));
-        body.add(linkTo(methodOn(GoalController.class).goals()).withSelfRel()
-            .andAffordance(afford(methodOn(GoalController.class).goals(null))) // Post affordance
+        body.add(linkTo(methodOn(GoalController.class).allGoals()).withSelfRel()
+            .andAffordance(afford(methodOn(GoalController.class).addNewGoal(null))) // Post affordance
         );
         return ResponseEntity.ok(body);
     }
@@ -45,7 +40,7 @@ public class GoalController {
      * 400 bad request
      */
     @PostMapping("/goals")
-    public ResponseEntity<GoalEntityModel> goals(@RequestBody EntityModel<Goal> goal) {
+    public ResponseEntity<GoalEntityModel> addNewGoal(@RequestBody EntityModel<Goal> goal) {
         var newGoal = goal.getContent();
         newGoal.setUsername(clientContext.getUsername());
         newGoal = goalService.create(newGoal);
@@ -59,7 +54,7 @@ public class GoalController {
      * 400 bad request
      */
     @PutMapping("/goals/{id}")
-    public ResponseEntity<RepresentationModel> goals(@PathVariable Long id, @RequestBody EntityModel<Goal> goal) {
+    public ResponseEntity<RepresentationModel> updateExistingGoal(@PathVariable Long id, @RequestBody EntityModel<Goal> goal) {
         throw new UnsupportedOperationException("not yet implemented");
     }
 
@@ -68,8 +63,8 @@ public class GoalController {
      * 204 no content -> no result found
      * 200 accepted -> goal in response body
      */
-    @GetMapping("/goal/{id}")
-    public ResponseEntity<GoalEntityModel> goal(@PathVariable Long id) {
+    @GetMapping("/goals/{id}")
+    public ResponseEntity<GoalEntityModel> getGoalById(@PathVariable Long id) {
         var goal = goalService.get(id);
         return new ResponseEntity<>(new GoalEntityModel(goal), HttpStatus.ACCEPTED);
     }

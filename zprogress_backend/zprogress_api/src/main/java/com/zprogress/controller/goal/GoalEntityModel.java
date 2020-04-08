@@ -12,9 +12,9 @@ public class GoalEntityModel extends EntityModel<Goal> {
     public GoalEntityModel(Goal goal) {
         super(goal);
         add(
-                linkTo(methodOn(GoalController.class).goal(goal.getId())).withSelfRel()
-                .andAffordance(afford(methodOn(GoalController.class).goals(goal.getId(), null)))
+                linkTo(methodOn(GoalController.class).getGoalById(goal.getId())).withSelfRel()
+                .andAffordance(afford(methodOn(GoalController.class).updateExistingGoal(goal.getId(), null)))
         );
-        add(WebMvcLinkBuilder.linkTo(methodOn(StepController.class).create(goal.getId(),null)).withRel("step"));
+        add(WebMvcLinkBuilder.linkTo(methodOn(StepController.class).addNewStep(goal.getId(),null)).withRel("step"));
     }
 }

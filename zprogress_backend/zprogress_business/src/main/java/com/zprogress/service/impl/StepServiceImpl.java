@@ -11,6 +11,8 @@ import com.zprogress.reminder.ReminderCalculator;
 import com.zprogress.reminder.ReminderCalculatorFactory;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public class StepServiceImpl implements StepService {
 
     private StepRepository stepRepository;
@@ -43,7 +45,7 @@ public class StepServiceImpl implements StepService {
     }
 
     @Override
-    public Step get(Long id) {
-        return null;
+    public List<Step> getByGoalId(Long goalId) {
+        return stepRepository.getByGoalId(goalId);
     }
 }

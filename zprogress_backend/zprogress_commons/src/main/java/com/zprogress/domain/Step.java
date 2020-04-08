@@ -17,6 +17,7 @@ public class Step {
     @NotBlank
     private String name;
 
+    @NotNull // for hypermedia
     @Min(1)
     @Max(5)
     private int importance;
@@ -26,9 +27,9 @@ public class Step {
 
     @NotNull
     private Repetition repetitionType;
-    private DayOfWeek repetitionDay; // not null of if repetitionType == weekly
+    private DayOfWeek repetitionDay; // not null if repetitionType == weekly
 
-    private LocalDateTime nextReminderDate; // if repetition type is monthly or years
+    private LocalDateTime nextReminderDate; // if repetition type is weekly, monthly or years
 
     public Long getId() {
         return id;

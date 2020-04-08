@@ -18,7 +18,7 @@ public class BaseController {
 
         resourceSupport.add(
                 linkTo(methodOn(BaseController.class).base()).withSelfRel(),
-                linkTo(methodOn(GoalController.class).goals()).withRel("Goal"));
+                linkTo(methodOn(GoalController.class).allGoals()).withRel("Goal"));
 
         return ResponseEntity.ok(resourceSupport);
     }
