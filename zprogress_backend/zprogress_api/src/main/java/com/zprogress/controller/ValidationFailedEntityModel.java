@@ -15,7 +15,7 @@ public class ValidationFailedEntityModel extends EntityModel<ValidationFailedEnt
 
     public static ValidationFailedEntityModel goalNotFound(Long goalId) {
         ValidationFailedEntityModel validationFailedEntityModel = new ValidationFailedEntityModel("Goal with id " + goalId + " not found");
-        validationFailedEntityModel.add(linkTo(methodOn(GoalController.class).goal(goalId, null)).withRel("goal"));
+        validationFailedEntityModel.add(linkTo(methodOn(GoalController.class).goals(goalId, null)).withRel("goal"));
         return validationFailedEntityModel;
     }
 }

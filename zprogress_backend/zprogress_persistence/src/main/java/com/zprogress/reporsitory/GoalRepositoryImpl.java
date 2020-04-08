@@ -16,6 +16,7 @@ import java.util.List;
 public class GoalRepositoryImpl extends AbstractRepository implements GoalRepository {
 
     public static final String INSERT_GOAL = "INSERT INTO GOAL (name, description, deadline, user_name) values (?, ?, ?, ?)";
+    // TODO user predicate
     private static final String SELECT_GOAL = "SELECT id, name, description, deadline, user_name from GOAL WHERE id = ?";
     private static final String SELECT_ALL = "SELECT id, name, description, deadline, user_name from GOAL";
     private static final String SELECT_BY_USERNAME = "SELECT id, name, description, deadline, user_name from GOAL WHERE user_name = ?";

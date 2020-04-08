@@ -5,6 +5,7 @@ import com.zprogress.domain.Goal;
 import com.zprogress.domain.services.GoalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,8 +34,7 @@ public class GoalController {
                 .map(goal -> new GoalEntityModel(goal))
                 .collect(Collectors.toList()));
         body.add(linkTo(methodOn(GoalController.class).goals()).withSelfRel()
-            .andAffordance(afford(methodOn(GoalController.class).goal(null, null))) // PUT affordance
-            .andAffordance(afford(methodOn(GoalController.class).goal((Goal) null))) // Post affordance
+            .andAffordance(afford(methodOn(GoalController.class).goals(null))) // Post affordance
         );
         return ResponseEntity.ok(body);
     }
@@ -44,10 +44,11 @@ public class GoalController {
      * 201 created -> if insert
      * 400 bad request
      */
-    @PostMapping("/goal")
-    public ResponseEntity<GoalEntityModel> goal(@RequestBody Goal goal) {
-        var newGoal = goalService.create(goal);
+    @PostMapping("/goals")
+    public ResponseEntity<GoalEntityModel> goals(@RequestBody EntityModel<Goal> goal) {
+        var newGoal = goal.getContent();
         newGoal.setUsername(clientContext.getUsername());
+        newGoal = goalService.create(newGoal);
         return new ResponseEntity<>(new GoalEntityModel(newGoal), HttpStatus.CREATED);
     }
 
@@ -57,9 +58,9 @@ public class GoalController {
      * 201 created -> if insert
      * 400 bad request
      */
-    @PutMapping("/goal/{id}")
-    public ResponseEntity<RepresentationModel> goal(@PathVariable Long id, @RequestBody Goal goal) {
-        return (ResponseEntity<RepresentationModel>) ResponseEntity.status(HttpStatus.NO_CONTENT);
+    @PutMapping("/goals/{id}")
+    public ResponseEntity<RepresentationModel> goals(@PathVariable Long id, @RequestBody EntityModel<Goal> goal) {
+        throw new UnsupportedOperationException("not yet implemented");
     }
 
     /**
@@ -69,7 +70,8 @@ public class GoalController {
      */
     @GetMapping("/goal/{id}")
     public ResponseEntity<GoalEntityModel> goal(@PathVariable Long id) {
-        return (ResponseEntity<GoalEntityModel>) ResponseEntity.status(HttpStatus.ACCEPTED);
+        var goal = goalService.get(id);
+        return new ResponseEntity<>(new GoalEntityModel(goal), HttpStatus.ACCEPTED);
     }
 
     @Autowired
