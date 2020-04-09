@@ -1,7 +1,0 @@
-{
-  "name": "zprogress_frontend",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "angular"
-}
