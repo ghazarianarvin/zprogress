@@ -24,11 +24,6 @@ public class StepController {
 
     private StepService stepService;
 
-    /**
-     * TODO
-     * 201 created -> if insert
-     * 400 bad request
-     */
     @PostMapping("/goals/{goalId}/steps")
     public ResponseEntity<StepEntityModel> addNewStep(@Min(1) @PathVariable Long goalId, @Valid @RequestBody Step step) {
         try {

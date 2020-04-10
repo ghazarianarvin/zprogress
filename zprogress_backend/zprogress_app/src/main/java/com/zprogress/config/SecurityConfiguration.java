@@ -2,7 +2,9 @@ package com.zprogress.config;
 
 import com.zprogress.controller.ClientContext;
 import com.zprogress.domain.services.UserService;
-import com.zprogress.security.*;
+import com.zprogress.security.JwtTokenService;
+import com.zprogress.security.SecurityConfigurer;
+import com.zprogress.security.UserDetailsServiceImpl;
 import com.zprogress.security.filter.ClientContextFilter;
 import com.zprogress.security.filter.JwtRequestFilter;
 import org.springframework.context.annotation.Bean;
@@ -59,4 +61,5 @@ public class SecurityConfiguration {
     public ClientContext clientContext() {
         return new ClientContext();
     }
+
 }
