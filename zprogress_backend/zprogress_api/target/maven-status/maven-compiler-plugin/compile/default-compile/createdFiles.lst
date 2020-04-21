@@ -1,6 +1,6 @@
-com\zprogress\controller\GoalController.class
-com\zprogress\controller\StepEntityModel.class
-com\zprogress\controller\GoalEntityModel.class
-com\zprogress\controller\StepController.class
-com\zprogress\controller\ValidationFailedEntityModel.class
+com\zprogress\controller\step\StepEntityModel.class
+com\zprogress\controller\ClientContext.class
+com\zprogress\controller\goal\GoalController.class
+com\zprogress\controller\step\StepController.class
+com\zprogress\controller\goal\GoalEntityModel.class
 module-info.class

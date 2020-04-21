@@ -20,6 +20,10 @@ export class AuthenticationService implements CanActivate {
     return this.isUserAuthenticated();
   }
 
+  getJwtToke() {
+    return localStorage.getItem('jwt');
+  }
+
   authenticate(username: string, password: string) {
     const httpOptions = {
       headers: new HttpHeaders({

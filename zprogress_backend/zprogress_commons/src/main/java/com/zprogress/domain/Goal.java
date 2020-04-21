@@ -2,10 +2,12 @@ package com.zprogress.domain;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Goal implements Serializable {
+// TODO move validation annotations to dto
+public class Goal {
 
     private Long id;
 
@@ -21,6 +23,8 @@ public class Goal implements Serializable {
     private LocalDate deadline;
 
     private String username;
+
+    private List<Step> steps;
 
     public Long getId() {
         return id;
@@ -60,5 +64,20 @@ public class Goal implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public List<Step> getSteps() {
+        return steps;
+    }
+
+    public void setSteps(List<Step> steps) {
+        this.steps = steps;
+    }
+
+    public void addStep(Step step) {
+        if (steps == null) {
+            steps = new ArrayList<>();
+        }
+        this.steps.add(step);
     }
 }

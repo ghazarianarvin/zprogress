@@ -34,7 +34,7 @@ public class StepRepositoryImpl extends AbstractRepository implements StepReposi
         jdbcTemplate.update(connection -> {
             var ps = connection
                     .prepareStatement(INSERT_STEP, Statement.RETURN_GENERATED_KEYS);
-            ps.setLong(1, step.getGoal().getId());
+//            ps.setLong(1, step.getGoal().getId());
             ps.setString(2, step.getName());
             ps.setInt(3, step.getImportance());
             ps.setObject(4, step.getStartDate());

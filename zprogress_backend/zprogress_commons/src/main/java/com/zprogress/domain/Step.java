@@ -8,10 +8,11 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+
+// TODO move validation annotations to dto
 public class Step {
 
     private Long id;
-    private Goal goal;
 
     @NotNull
     @NotBlank
@@ -37,14 +38,6 @@ public class Step {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Goal getGoal() {
-        return goal;
-    }
-
-    public void setGoal(Goal goal) {
-        this.goal = goal;
     }
 
     public String getName() {

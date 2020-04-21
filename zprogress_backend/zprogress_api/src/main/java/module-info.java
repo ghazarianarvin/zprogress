@@ -10,12 +10,15 @@ module api {
 
 
     requires org.apache.tomcat.embed.core;
+    requires org.slf4j;
 
     exports com.zprogress.controller.goal;
     exports com.zprogress.controller.step;
+    exports com.zprogress.controller.evaluation;
     exports com.zprogress.controller;
 
     opens com.zprogress.controller.step to spring.core;
     opens com.zprogress.controller.goal to spring.core;
+    opens com.zprogress.controller.evaluation to spring.core;
     opens com.zprogress.controller to spring.core;
 }

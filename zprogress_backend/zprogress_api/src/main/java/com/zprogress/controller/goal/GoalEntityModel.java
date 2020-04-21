@@ -1,20 +1,19 @@
 package com.zprogress.controller.goal;
 
 import com.zprogress.controller.step.StepController;
-import com.zprogress.domain.Goal;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-public class GoalEntityModel extends EntityModel<Goal> {
+public class GoalEntityModel extends EntityModel<GoalDTO> {
+    Logger logger = LoggerFactory.getLogger(GoalEntityModel.class);
 
-    public GoalEntityModel(Goal goal) {
+
+    public GoalEntityModel(GoalDTO goal) {
         super(goal);
-        add(
-                linkTo(methodOn(GoalController.class).getGoalById(goal.getId())).withSelfRel()
-                .andAffordance(afford(methodOn(GoalController.class).updateExistingGoal(goal.getId(), null)))
-        );
-        add(WebMvcLinkBuilder.linkTo(methodOn(StepController.class).addNewStep(goal.getId(),null)).withRel("step"));
+        add(linkTo(methodOn(StepController.class).steps(goal.getId())).withRel("steps"));
     }
 }

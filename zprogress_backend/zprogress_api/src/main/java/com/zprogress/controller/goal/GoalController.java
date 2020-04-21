@@ -5,68 +5,74 @@ import com.zprogress.domain.Goal;
 import com.zprogress.domain.services.GoalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.mediatype.alps.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.stream.Collectors;
 
+import static org.springframework.hateoas.mediatype.PropertyUtils.getExposedProperties;
+import static org.springframework.hateoas.mediatype.alps.Alps.doc;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 @RestController
+@RequestMapping("/goals")
 public class GoalController {
 
     private ClientContext clientContext;
     private GoalService goalService;
 
-    @GetMapping("/goals")
-    public ResponseEntity<CollectionModel<GoalEntityModel>> allGoals() {
+    @GetMapping
+    public ResponseEntity<CollectionModel<GoalEntityModel>> goals() {
         var goals = goalService.goals(clientContext.getUsername());
         var body = new CollectionModel(goals
                 .stream()
-                .map(goal -> new GoalEntityModel(goal))
+                .map(goal -> new GoalEntityModel(new GoalDTO(goal)))
                 .collect(Collectors.toList()));
-        body.add(linkTo(methodOn(GoalController.class).allGoals()).withSelfRel()
-            .andAffordance(afford(methodOn(GoalController.class).addNewGoal(null))) // Post affordance
+        body.add(
+                linkTo(GoalController.class).slash("profile").withRel("profiles"),
+                linkTo(methodOn(GoalController.class).goals()).withSelfRel()
+                    .andAffordance(afford(methodOn(GoalController.class).goals(null)))
         );
         return ResponseEntity.ok(body);
     }
 
-    /**
-     * TODO
-     * 201 created -> if insert
-     * 400 bad request
-     */
-    @PostMapping("/goals")
-    public ResponseEntity<GoalEntityModel> addNewGoal(@RequestBody EntityModel<Goal> goal) {
-        var newGoal = goal.getContent();
-        newGoal.setUsername(clientContext.getUsername());
-        newGoal = goalService.create(newGoal);
-        return new ResponseEntity<>(new GoalEntityModel(newGoal), HttpStatus.CREATED);
+    // TODO don't return body --> put id in location
+    @PostMapping
+    public ResponseEntity<GoalEntityModel> goals(@RequestBody GoalDTO goal) {
+//        var newGoal = goal.getContent();
+//        newGoal.setUsername(clientContext.getUsername());
+//        newGoal = goalService.create(newGoal);
+        return new ResponseEntity<>(new GoalEntityModel(new GoalDTO(new Goal())), HttpStatus.CREATED);
     }
 
-    /**
-     * TODO
-     * 204 no content -> if update
-     * 201 created -> if insert
-     * 400 bad request
-     */
-    @PutMapping("/goals/{id}")
-    public ResponseEntity<RepresentationModel> updateExistingGoal(@PathVariable Long id, @RequestBody EntityModel<Goal> goal) {
-        throw new UnsupportedOperationException("not yet implemented");
-    }
+    @GetMapping(value = "/profile", produces = MediaTypes.ALPS_JSON_VALUE)
+    public Alps profile() {
 
-    /**
-     * TODO
-     * 204 no content -> no result found
-     * 200 accepted -> goal in response body
-     */
-    @GetMapping("/goals/{id}")
-    public ResponseEntity<GoalEntityModel> getGoalById(@PathVariable Long id) {
-        var goal = goalService.get(id);
-        return new ResponseEntity<>(new GoalEntityModel(goal), HttpStatus.ACCEPTED);
+        return Alps.alps() //
+                .doc(doc() //
+                        .href("https://example.org/samples/full/doc.html") //
+                        .value("value goes here") //
+                        .format(Format.TEXT) //
+                        .build()) //
+                .descriptor(getExposedProperties(GoalDTO.class).stream() //
+                        .map(property -> Descriptor.builder() //
+                                .id("class field [" + property.getName() + "]") //
+                                .name(property.getName()) //
+                                .type(Type.SEMANTIC) //
+                                .ext(Ext.builder() //
+                                        .id("ext [" + property.getName() + "]") //
+                                        .href("https://example.org/samples/ext/" + property.getName()) //
+                                        .value("value goes here") //
+                                        .build()) //
+                                .rt("rt for [" + property.getName() + "]") //
+                                .descriptor(Collections.singletonList(Descriptor.builder().id("embedded").build())) //
+                                .build()) //
+                        .collect(Collectors.toList()))
+                .build();
     }
 
     @Autowired

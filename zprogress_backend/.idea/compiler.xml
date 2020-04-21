@@ -3,17 +3,6 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
-      <profile name="Maven default annotation processors profile" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="zprogress_backend.zprogress_business" />
-        <module name="zprogress_security" />
-        <module name="zprogress_backend.zprogress_persistence" />
-        <module name="zprogress_backend.zprogress_commons" />
-        <module name="zprogress_app" />
-        <module name="zprogress_backend.zprogress_api" />
-      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="zprogress_security" target="11" />
@@ -21,11 +10,15 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="zprogress_api" options="-parameters" />
       <module name="zprogress_app" options="-parameters" />
       <module name="zprogress_backend.zprogress_api" options="-parameters" />
       <module name="zprogress_backend.zprogress_business" options="-parameters" />
       <module name="zprogress_backend.zprogress_commons" options="-parameters" />
       <module name="zprogress_backend.zprogress_persistence" options="-parameters" />
+      <module name="zprogress_business" options="-parameters" />
+      <module name="zprogress_commons" options="-parameters" />
+      <module name="zprogress_persistence" options="-parameters" />
       <module name="zprogress_security" options="-parameters" />
     </option>
   </component>

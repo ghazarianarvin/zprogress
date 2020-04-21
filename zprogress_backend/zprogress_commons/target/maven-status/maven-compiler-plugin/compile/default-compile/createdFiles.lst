@@ -1,10 +1,13 @@
-com\zprogress\domain\services\GoalService.class
 com\zprogress\domain\services\StepService.class
 com\zprogress\domain\Goal.class
+com\zprogress\domain\services\UserService.class
+com\zprogress\domain\repository\StepRepository.class
+com\zprogress\domain\services\GoalService.class
 module-info.class
 com\zprogress\domain\exception\GoalNotFoundValidationException.class
 com\zprogress\domain\Step.class
+com\zprogress\domain\repository\UserRepository.class
 com\zprogress\domain\Repetition.class
+com\zprogress\domain\User.class
 com\zprogress\domain\repository\GoalRepository.class
-com\zprogress\domain\repository\StepRepository.class
 com\zprogress\domain\repository\CommonRepository.class

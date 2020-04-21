@@ -1,5 +1,6 @@
 com\zprogress\reminder\ReminderCalculatorFactory.class
 com\zprogress\reminder\YearlyReminderCalculator.class
+com\zprogress\service\impl\UserServiceImpl.class
 com\zprogress\service\impl\GoalServiceImpl.class
 com\zprogress\reminder\MonthlyReminderCalculator.class
 com\zprogress\service\impl\StepServiceImpl.class

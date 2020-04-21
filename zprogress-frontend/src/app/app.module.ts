@@ -11,6 +11,7 @@ import {MainComponent} from './main/main.component';
 import {
   AuthenticationService as AuthGuard
 } from './shared/AuthenticationService';
+import {MainService} from './shared/MainService';
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -30,7 +31,7 @@ const routes: Routes = [
     ReactiveFormsModule, FormsModule, HttpClientModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [AuthenticationService],
+  providers: [AuthenticationService, MainService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

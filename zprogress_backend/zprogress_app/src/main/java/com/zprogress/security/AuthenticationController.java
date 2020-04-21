@@ -1,5 +1,7 @@
 package com.zprogress.security;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 public class AuthenticationController {
 
+    Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
+
+
     private AuthenticationManager authenticationManager;
     private JwtTokenService jwtTokenService;
     private UserDetailsService userDetailsService;
@@ -26,6 +31,7 @@ public class AuthenticationController {
                 new UsernamePasswordAuthenticationToken(username, password));
         var authenticatedUser = userDetailsService.loadUserByUsername(username); // actually redundant
         var jwtToken = jwtTokenService.createToken(authenticatedUser.getUsername());
+        logger.info("created jwt ({}) ", jwtToken);
         return new ResponseEntity(new JwtTokenEntityModel(jwtToken), HttpStatus.OK);
     }
 

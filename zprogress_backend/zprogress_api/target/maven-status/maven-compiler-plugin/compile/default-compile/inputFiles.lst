@@ -1,6 +1,6 @@
-C:\dev\workspace_zprogress\zprogress_backend\zprogress_api\src\main\java\com\zprogress\controller\StepEntityModel.java
-C:\dev\workspace_zprogress\zprogress_backend\zprogress_api\src\main\java\com\zprogress\controller\GoalEntityModel.java
-C:\dev\workspace_zprogress\zprogress_backend\zprogress_api\src\main\java\com\zprogress\controller\ValidationFailedEntityModel.java
+C:\dev\workspace_zprogress\zprogress_backend\zprogress_api\src\main\java\com\zprogress\controller\ClientContext.java
+C:\dev\workspace_zprogress\zprogress_backend\zprogress_api\src\main\java\com\zprogress\controller\goal\GoalController.java
 C:\dev\workspace_zprogress\zprogress_backend\zprogress_api\src\main\java\module-info.java
-C:\dev\workspace_zprogress\zprogress_backend\zprogress_api\src\main\java\com\zprogress\controller\GoalController.java
-C:\dev\workspace_zprogress\zprogress_backend\zprogress_api\src\main\java\com\zprogress\controller\StepController.java
+C:\dev\workspace_zprogress\zprogress_backend\zprogress_api\src\main\java\com\zprogress\controller\goal\GoalEntityModel.java
+C:\dev\workspace_zprogress\zprogress_backend\zprogress_api\src\main\java\com\zprogress\controller\step\StepController.java
+C:\dev\workspace_zprogress\zprogress_backend\zprogress_api\src\main\java\com\zprogress\controller\step\StepEntityModel.java

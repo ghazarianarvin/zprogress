@@ -1,6 +1,8 @@
 com\zprogress\reporsitory\StepRepositoryImpl.class
-com\zprogress\reporsitory\AbstractRepository.class
 com\zprogress\reporsitory\GoalRepositoryImpl.class
 module-info.class
-com\zprogress\reporsitory\GoalRepositoryImpl$GoalResultSetHandler.class
+com\zprogress\reporsitory\AbstractRepository.class
+com\zprogress\reporsitory\UserRepositoryImpl$UserResultSetHandler.class
+com\zprogress\reporsitory\UserRepositoryImpl.class
+com\zprogress\reporsitory\GoalRepositoryImpl$GoalRowCallbackHandler.class
 com\zprogress\reporsitory\StepRepositoryImpl$StepResultSetHandler.class

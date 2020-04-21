@@ -1,18 +1,23 @@
 package com.zprogress.security.filter;
 
 import com.zprogress.security.JwtTokenService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class JwtRequestFilter extends OncePerRequestFilter {
+public class JwtRequestFilter extends GenericFilterBean {
+
+    Logger logger = LoggerFactory.getLogger(JwtRequestFilter.class);
 
     private UserDetailsService userDetailsService;
 
@@ -23,18 +28,20 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         this.jwtTokenService = jwtTokenService;
     }
 
+
     @Override
-    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        var authorizationHeader = httpServletRequest.getHeader("Authorization");
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
+        var authorizationHeader = httpRequest.getHeader("Authorization");
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             var jwt = authorizationHeader.substring(7);
+            logger.info("validating jwt ({}) ", jwt);
             // TODO validate token first
             var username = jwtTokenService.extractUsernameFromToken(jwt);
             var userDetails = userDetailsService.loadUserByUsername(username);
             var authenticationToken =  new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }
-        filterChain.doFilter(httpServletRequest, httpServletResponse);
+        filterChain.doFilter(servletRequest, servletResponse);
     }
-
 }

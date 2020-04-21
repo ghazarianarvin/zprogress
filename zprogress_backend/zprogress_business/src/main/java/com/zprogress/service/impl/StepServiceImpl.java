@@ -30,7 +30,7 @@ public class StepServiceImpl implements StepService {
         if (goal == null) {
             throw new GoalNotFoundValidationException(goalId);
         }
-        step.setGoal(goal);
+//        step.setGoal(goal);
 
         var repetition = step.getRepetitionType();
         var startDate = step.getStartDate();

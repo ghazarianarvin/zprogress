@@ -1,10 +1,13 @@
 C:\dev\workspace_zprogress\zprogress_backend\zprogress_commons\src\main\java\com\zprogress\domain\services\GoalService.java
-C:\dev\workspace_zprogress\zprogress_backend\zprogress_commons\src\main\java\com\zprogress\domain\exception\GoalNotFoundValidationException.java
-C:\dev\workspace_zprogress\zprogress_backend\zprogress_commons\src\main\java\com\zprogress\domain\repository\StepRepository.java
 C:\dev\workspace_zprogress\zprogress_backend\zprogress_commons\src\main\java\com\zprogress\domain\Repetition.java
 C:\dev\workspace_zprogress\zprogress_backend\zprogress_commons\src\main\java\com\zprogress\domain\Step.java
 C:\dev\workspace_zprogress\zprogress_backend\zprogress_commons\src\main\java\com\zprogress\domain\Goal.java
-C:\dev\workspace_zprogress\zprogress_backend\zprogress_commons\src\main\java\com\zprogress\domain\repository\GoalRepository.java
 C:\dev\workspace_zprogress\zprogress_backend\zprogress_commons\src\main\java\com\zprogress\domain\repository\CommonRepository.java
 C:\dev\workspace_zprogress\zprogress_backend\zprogress_commons\src\main\java\module-info.java
+C:\dev\workspace_zprogress\zprogress_backend\zprogress_commons\src\main\java\com\zprogress\domain\repository\UserRepository.java
 C:\dev\workspace_zprogress\zprogress_backend\zprogress_commons\src\main\java\com\zprogress\domain\services\StepService.java
+C:\dev\workspace_zprogress\zprogress_backend\zprogress_commons\src\main\java\com\zprogress\domain\exception\GoalNotFoundValidationException.java
+C:\dev\workspace_zprogress\zprogress_backend\zprogress_commons\src\main\java\com\zprogress\domain\repository\StepRepository.java
+C:\dev\workspace_zprogress\zprogress_backend\zprogress_commons\src\main\java\com\zprogress\domain\repository\GoalRepository.java
+C:\dev\workspace_zprogress\zprogress_backend\zprogress_commons\src\main\java\com\zprogress\domain\User.java
+C:\dev\workspace_zprogress\zprogress_backend\zprogress_commons\src\main\java\com\zprogress\domain\services\UserService.java
