@@ -35,8 +35,11 @@ public class JwtRequestFilter extends GenericFilterBean {
         var authorizationHeader = httpRequest.getHeader("Authorization");
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             var jwt = authorizationHeader.substring(7);
-            logger.info("validating jwt ({}) ", jwt);
-            // TODO validate token first
+            if (!jwtTokenService.isTokenValid(jwt)) {
+                logger.info("invalid jwt ({}) ", jwt);
+                filterChain.doFilter(servletRequest, servletResponse);
+                return;
+            }
             var username = jwtTokenService.extractUsernameFromToken(jwt);
             var userDetails = userDetailsService.loadUserByUsername(username);
             var authenticationToken =  new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());

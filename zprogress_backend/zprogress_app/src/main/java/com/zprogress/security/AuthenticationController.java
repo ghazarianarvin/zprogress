@@ -29,9 +29,8 @@ public class AuthenticationController {
         var password = request.getHeader("password");
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password));
-        var authenticatedUser = userDetailsService.loadUserByUsername(username); // actually redundant
-        var jwtToken = jwtTokenService.createToken(authenticatedUser.getUsername());
-        logger.info("created jwt ({}) ", jwtToken);
+        var jwtToken = jwtTokenService.getToken(username);
+        logger.info("got jwt ({}) ", jwtToken);
         return new ResponseEntity(new JwtTokenEntityModel(jwtToken), HttpStatus.OK);
     }
 
