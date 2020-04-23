@@ -25,17 +25,23 @@ export class LoginComponent {
   }
 
   authenticate() {
-
-    const username = this.loginForm.value.username;
-    const passwordMd5 = (new Md5()).appendStr(this.loginForm.value.password).end();
-    this.authService.authenticate(username, passwordMd5 + '')
-      .subscribe(
-        res => {
-          this.error = null;
-          this.router.navigate(['/main']);
-        },
-        err => this.error = 'Authentication failed.');
-
+    if (!this.authService.isUserAuthenticated()) {
+      const username = this.loginForm.value.username;
+      const passwordMd5 = (new Md5()).appendStr(this.loginForm.value.password).end();
+      this.authService.authenticate(username, passwordMd5 + '')
+        .subscribe(
+          res => {
+            this.error = null;
+            this.router.navigate(['/main']);
+          },
+          err => {
+            console.log(err);
+            this.error = 'authentication failed';
+          });
+    } else {
+      console.log('already logged in');
+      this.router.navigate(['/main']);
+    }
   }
 
 }
