@@ -1,6 +1,11 @@
-com\zprogress\controller\step\StepEntityModel.class
 com\zprogress\controller\ClientContext.class
+com\zprogress\controller\evaluation\EvaluationDTO.class
 com\zprogress\controller\goal\GoalController.class
 com\zprogress\controller\step\StepController.class
-com\zprogress\controller\goal\GoalEntityModel.class
+com\zprogress\controller\evaluation\EvaluationController.class
 module-info.class
+com\zprogress\controller\evaluation\EvaluationEntityModel.class
+com\zprogress\controller\step\StepEntityModel.class
+com\zprogress\controller\goal\GoalEntityModel.class
+com\zprogress\controller\goal\GoalDTO.class
+com\zprogress\controller\step\StepDTO.class

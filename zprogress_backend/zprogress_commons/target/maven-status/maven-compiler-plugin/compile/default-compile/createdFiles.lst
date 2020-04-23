@@ -1,6 +1,7 @@
 com\zprogress\domain\services\StepService.class
 com\zprogress\domain\Goal.class
 com\zprogress\domain\services\UserService.class
+com\zprogress\domain\Evaluation.class
 com\zprogress\domain\repository\StepRepository.class
 com\zprogress\domain\services\GoalService.class
 module-info.class
