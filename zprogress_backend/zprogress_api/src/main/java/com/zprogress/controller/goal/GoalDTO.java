@@ -1,21 +1,27 @@
 package com.zprogress.controller.goal;
 
-import com.zprogress.controller.step.StepDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zprogress.domain.Goal;
 import org.springframework.hateoas.server.core.Relation;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 
 @Relation(collectionRelation = "goals")
 public class GoalDTO implements Serializable {
 
+    @JsonIgnore
     private Long id;
+    @NotNull
+    @NotBlank
     private String name;
+    @NotNull
+    @NotBlank
     private String description;
+    @NotNull
     private LocalDate deadline;
-    private List<StepDTO> steps;
 
     public GoalDTO(Goal goal) {
         this.setName(goal.getName());
@@ -54,13 +60,5 @@ public class GoalDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public List<StepDTO> getSteps() {
-        return steps;
-    }
-
-    public void setSteps(List<StepDTO> steps) {
-        this.steps = steps;
     }
 }

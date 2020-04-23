@@ -8,6 +8,10 @@ module api {
     requires transitive spring.context;
     requires transitive spring.beans;
 
+    requires transitive com.fasterxml.jackson.core;
+    requires transitive com.fasterxml.jackson.databind;
+    requires transitive com.fasterxml.classmate;
+
 
     requires org.apache.tomcat.embed.core;
     requires org.slf4j;

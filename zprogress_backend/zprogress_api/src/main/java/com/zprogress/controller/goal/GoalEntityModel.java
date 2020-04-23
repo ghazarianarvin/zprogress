@@ -11,7 +11,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class GoalEntityModel extends EntityModel<GoalDTO> {
     Logger logger = LoggerFactory.getLogger(GoalEntityModel.class);
 
-
     public GoalEntityModel(GoalDTO goal) {
         super(goal);
         add(linkTo(methodOn(StepController.class).steps(goal.getId())).withRel("steps"));

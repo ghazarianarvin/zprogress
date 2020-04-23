@@ -19,8 +19,8 @@ export class MainService  {
   }
 
   private parseKeys(data) {
-    Object.keys(data.message).forEach(key => {
-      console.log(data.message[key] + ' <<<<<<<<<<<');
+    Object.keys(data).forEach(key => {
+      console.log(data[key] + ' <<<<<<<<<<<');
     });
     return data;
   }

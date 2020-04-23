@@ -35,19 +35,29 @@ public class GoalController {
         body.add(
                 linkTo(GoalController.class).slash("profile").withRel("profiles"),
                 linkTo(methodOn(GoalController.class).goals()).withSelfRel()
-                    .andAffordance(afford(methodOn(GoalController.class).goals(null)))
+                    .andAffordance(afford(methodOn(GoalController.class).postGoal(null)))
+                    .andAffordance(afford(methodOn(GoalController.class).putGoal(null)))
         );
         return ResponseEntity.ok(body);
     }
 
     // TODO don't return body --> put id in location
     @PostMapping
-    public ResponseEntity<GoalEntityModel> goals(@RequestBody GoalDTO goal) {
+    public ResponseEntity<GoalEntityModel> postGoal(@RequestBody GoalDTO goal) {
 //        var newGoal = goal.getContent();
 //        newGoal.setUsername(clientContext.getUsername());
 //        newGoal = goalService.create(newGoal);
         return new ResponseEntity<>(new GoalEntityModel(new GoalDTO(new Goal())), HttpStatus.CREATED);
     }
+
+    @PutMapping
+    public ResponseEntity<GoalEntityModel> putGoal(@RequestBody GoalDTO goal) {
+//        var newGoal = goal.getContent();
+//        newGoal.setUsername(clientContext.getUsername());
+//        newGoal = goalService.create(newGoal);
+        return new ResponseEntity<>(new GoalEntityModel(new GoalDTO(new Goal())), HttpStatus.CREATED);
+    }
+
 
 
     @GetMapping(value = "/profile", produces = MediaTypes.ALPS_JSON_VALUE)

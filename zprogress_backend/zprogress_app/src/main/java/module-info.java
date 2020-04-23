@@ -9,9 +9,6 @@ module app {
 
     requires java.sql;
     requires jdk.unsupported;
-    requires com.fasterxml.jackson.core;
-    requires com.fasterxml.jackson.databind;
-    requires com.fasterxml.classmate;
     requires org.apache.tomcat.embed.core;
     requires jjwt;
     requires java.xml.bind;
