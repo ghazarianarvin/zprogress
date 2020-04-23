@@ -49,6 +49,12 @@ public class GoalController {
         return new ResponseEntity<>(new GoalEntityModel(new GoalDTO(new Goal())), HttpStatus.CREATED);
     }
 
+    @RequestMapping(method = RequestMethod.OPTIONS)
+    public ResponseEntity preflight() {
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+
     @GetMapping(value = "/profile", produces = MediaTypes.ALPS_JSON_VALUE)
     public Alps profile() {
 

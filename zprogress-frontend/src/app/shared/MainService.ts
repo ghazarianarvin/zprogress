@@ -6,7 +6,7 @@ import {AuthenticationService} from './AuthenticationService';
 @Injectable()
 export class MainService  {
 
-  private url =  'http://localhost:8080/base';
+  private url =  'http://localhost:8080/goals';
 
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) {
   }
