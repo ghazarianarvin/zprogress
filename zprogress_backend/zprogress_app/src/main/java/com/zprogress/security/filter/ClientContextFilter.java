@@ -31,9 +31,11 @@ public class ClientContextFilter extends GenericFilterBean {
         var authorizationHeader = ((HttpServletRequest) servletRequest).getHeader("Authorization");
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             var jwt = authorizationHeader.substring(7);
-            var username = jwtTokenService.extractUsernameFromToken(jwt);
-            clientContext.setUsername(username);
-            logger.info("populated client context {}", clientContext.toString());
+            if (jwtTokenService.isTokenValid(jwt)) {
+                var username = jwtTokenService.extractUsernameFromToken(jwt);
+                clientContext.setUsername(username);
+                logger.info("populated client context {}", clientContext.toString());
+            }
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }

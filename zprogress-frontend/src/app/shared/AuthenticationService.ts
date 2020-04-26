@@ -7,7 +7,7 @@ import {CanActivate} from '@angular/router';
 @Injectable()
 export class AuthenticationService implements CanActivate {
 
-  private url =  'http://localhost:8080/authenticate';
+  private authenticateUrl =  'http://localhost:8080/authentication';
 
   constructor(private http: HttpClient) {
   }
@@ -27,13 +27,12 @@ export class AuthenticationService implements CanActivate {
   authenticate(username: string, password: string) {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/prs.hal-forms+json',
         username,
         password
       })
     };
 
-    const authenticationObservable = this.http.post(this.url, {}, httpOptions)
+    const authenticationObservable = this.http.post(this.authenticateUrl, {}, httpOptions)
       .pipe(
         map(res => {
           const key = 'entity';
@@ -45,4 +44,18 @@ export class AuthenticationService implements CanActivate {
     return authenticationObservable;
   }
 
+  logout() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + this.getJwtToke()
+      })
+    };
+
+    const authenticationObservable = this.http.post(this.authenticateUrl + '/logout', {}, httpOptions)
+      .pipe(
+        catchError(err => throwError(err))
+      ).subscribe(res => {
+        localStorage.removeItem('jwt');
+      });
+  }
 }

@@ -23,16 +23,33 @@ public class AuthenticationController {
     private JwtTokenService jwtTokenService;
     private UserDetailsService userDetailsService;
 
-    @PostMapping(value = "/authenticate")
-    public ResponseEntity<JwtTokenEntityModel> authenticate(HttpServletRequest request) {
+    @PostMapping(value = "/authentication")
+    public ResponseEntity<AuthenticationResponseEntityModel> authenticate(HttpServletRequest request) {
         var username = request.getHeader("username");
         var password = request.getHeader("password");
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password));
         var jwtToken = jwtTokenService.getToken(username);
-        logger.info("got jwt ({}) ", jwtToken);
-        return new ResponseEntity(new JwtTokenEntityModel(jwtToken), HttpStatus.OK);
+        logger.info("generated new token ({}) for {}", jwtToken, username);
+        return new ResponseEntity(new AuthenticationResponseEntityModel(jwtToken), HttpStatus.OK);
     }
+
+    @PostMapping(value = "/authentication/logout")
+    public ResponseEntity<AuthenticationResponseEntityModel> logout(HttpServletRequest request) {
+        var username = request.getHeader("username");
+        var jwt = JwtTokenUtil.extractJwtFromRequest(request);
+
+        if (jwt.isPresent() && jwtTokenService.isTokenValid(jwt.get())) {
+            username = jwtTokenService.extractUsernameFromToken(jwt.get());
+            if (jwtTokenService.discardTokenFor(username)) {
+                logger.info("{}'s token was successfully discarded.", username);
+                return new ResponseEntity(new AuthenticationResponseEntityModel("Token successfully discarded"), HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity(new AuthenticationResponseEntityModel("No valid JWT token provided"), HttpStatus.BAD_REQUEST);
+    }
+
 
     @Autowired
     public void setAuthenticationManager(AuthenticationManager authenticationManager) {

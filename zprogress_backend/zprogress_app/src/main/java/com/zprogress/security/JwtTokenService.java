@@ -50,6 +50,10 @@ public class JwtTokenService {
                 .setSigningKey(SIGNATURE_KEY).parseClaimsJws(token).getBody().getSubject();
     }
 
+    public boolean discardTokenFor(String username) {
+        return JSON_WEB_TOKENS.remove(username) != null;
+    }
+
     private String createNewToken(String username) {
         var claims = Jwts.claims()
                 .setSubject(username);
