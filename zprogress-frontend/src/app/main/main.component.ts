@@ -10,12 +10,14 @@ import {Router} from '@angular/router';
 })
 export class MainComponent implements OnInit {
 
+  dummyContent: string;
+
   constructor(private mainService: MainService,
               private authenticationService: AuthenticationService,
               private router: Router) { }
 
   ngOnInit() {
-    this.mainService.callBase();
+    this.mainService.callBase().subscribe(res => this.dummyContent = JSON.stringify(res, null, 2));
   }
 
   logout() {

@@ -4,18 +4,18 @@ import {map} from 'rxjs/operators';
 import {AuthenticationService} from './AuthenticationService';
 
 @Injectable()
-export class MainService  {
+export class MainService {
 
-  private url =  'http://localhost:8080/goals';
+  private url = 'http://localhost:8080/goals';
 
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) {
   }
 
   callBase() {
-    this.http.get(this.url, this.header())
+    return this.http.get(this.url, this.header())
       .pipe(
         map(resp => this.parseKeys(resp))
-      ).subscribe(res => console.log(res));
+      );
   }
 
   private parseKeys(data) {
