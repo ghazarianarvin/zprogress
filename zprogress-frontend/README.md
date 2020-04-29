@@ -1,27 +1,149 @@
-# ZprogressFrontend
+hal parser grammer:
+start = hal
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.23.
+hal = cbr _ embedded? _ (km _ links)+ _ (km _ affordances)? _ cbl _
+embedded = embedded_k cl _ cbr _ data _ cbl
+data = resource:identifier_q cl _ sbr _ elements _ sbl
+// {...}, {...},{...},{...} 
+elements = element _ km _ elements / element
+// {...}
+element = cbr _ content _ cbl
+content = fields / field
+fields = links / field _ km _ fields / field
+field = identifier_q cl _ identifier_q / identifier_q cl _ element / identifier_q cl _ array / identifier_q cl _ boolean
+array = sbr _ field+ _ sbl / sbr _ elements _ sbl
+boolean = "true" / "false"
+links = links_k cl _ elements
+affordances = affordances_k cl _ elements
 
-## Development server
+embedded_k = q "_embedded" q
+links_k = q "_links" q
+affordances_k = q "_templates" q
+identifier= char:.+ { return char; }
+identifier_q = q identifier q
+cbr = "{"
+cbl = "}"
+sbr = "["
+sbl = "]"
+cl = ":"
+q = "\""
+km = ","
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+_ "whitespace"
+  = [ \t\n\r]*
 
-## Code scaffolding
+== Example of an empty json == 
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+{
+    "_links": {
+        "profiles": {
+            "href": "http://localhost:8080/goals/profile"
+        },
+        "self": {
+            "href": "http://localhost:8080/goals"
+        }
+    },
+    "_templates": {
+        "default": {
+            "method": "post",
+            "properties": [
+                {
+                    "name": "deadline",
+                    "required": true
+                },
+                {
+                    "name": "description",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "required": true
+                }
+            ]
+        },
+        "putGoal": {
+            "method": "put",
+            "properties": [
+                {
+                    "name": "deadline",
+                    "required": true
+                },
+                {
+                    "name": "description",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "required": true
+                }
+            ]
+        }
+    }
+}
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+== parse completion == 
+{
+ "_embedded": { 
+   "goal": [ 
+     { 
+      "nested": {"xx": "yy"},
+      "dd": "hi", 
+      "xx": "blub", 
+      "mm": "hihi",
+                      "_links": {
+                    "steps": {
+                        "href": "xxx"
+                    },
+                     "resource": {
+                        "href": "yy"
+                       }
+                }
+     },
+     { 
+      "dd": "hi", 
+      "xx": "blub", 
+      "mm": "hihi" 
+     } 
+    ] 
+  }, "_links": { 
+         "self": "xxx" 
+     }
+,
+    "_templates": {
+        "default": {
+            "method": "post",
+            "properties": [
+                {
+                    "name": "deadline",
+                    "required": true
+                },
+                {
+                    "name": "description",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "required": true
+                }
+            ]
+        },
+        "putGoal": {
+            "method": "put",
+            "properties": [
+                {
+                    "name": "deadline",
+                    "required": true
+                },
+                {
+                    "name": "description",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "required": true
+                }
+            ]
+        }
+    }
+}

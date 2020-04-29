@@ -3,6 +3,8 @@ import {MainService} from '../shared/MainService';
 import {AuthenticationService} from '../shared/AuthenticationService';
 import {Router} from '@angular/router';
 
+declare var peg$parse: any;
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -17,7 +19,11 @@ export class MainComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    this.mainService.callBase().subscribe(res => this.dummyContent = JSON.stringify(res, null, 2));
+    this.mainService.callBase().subscribe(res => {
+      this.dummyContent = JSON.stringify(res, null, 2).replace(/\s/g, '');
+      console.log(
+        peg$parse(this.dummyContent));
+    });
   }
 
   logout() {

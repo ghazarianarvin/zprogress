@@ -8,9 +8,7 @@ import {AuthenticationService} from './shared/AuthenticationService';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule, Routes} from '@angular/router';
 import {MainComponent} from './main/main.component';
-import {
-  AuthenticationService as AuthGuard
-} from './shared/AuthenticationService';
+import {AuthenticationService as AuthGuard} from './shared/AuthenticationService';
 import {MainService} from './shared/MainService';
 
 const routes: Routes = [
