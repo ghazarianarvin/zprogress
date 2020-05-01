@@ -8,11 +8,9 @@ hal = cbr _ embedded:embedded? _ links:(km _ links)+ _ affordances:(km _ afforda
         affordances: affordances
     }
 }
-embedded = embedded_k cl _ cbr _ data _ cbl
-data = resource:identifier_q cl _ sbr _ elements _ sbl
-// {...}, {...},{...},{...}
-elements = element _ km _ elements / element
-// {...}
+embedded = embedded_k cl _ cbr _ data: data _ cbl { return data; }
+data = resource:identifier_q cl _ sbr _ elements: elements _ sbl { return {resource: elements}}
+elements = element _ km _ elements / element: element { return {element: element}}
 element = cbr _ content:content _ cbl { return {content: content}}
 content = fields / field
 fields = links / field _ km _ fields / field
@@ -25,13 +23,14 @@ return {
 }
 array = sbr _ field+ _ sbl / sbr _ elements _ sbl
 boolean = "true" / "false"
-links = links_k cl _ elements
+links = link:links_k cl _ elements:elements { return {link: elements}}
 affordances = affordances_k cl _ elements
 
-embedded_k = q "_embedded" q
-links_k = q "_links" q
-affordances_k = q "_templates" q
-identifier_q = q [ a-zA-Z0-9\-:\/]+ q
+embedded_k = q key:"_embedded" q { return key; }
+links_k = q key:"_links" q { return key; }
+affordances_k = q key:"_templates" q { return key; }
+identifier_q = q string:[ a-zA-Z0-9\-:\/]+ q { return string.join(""); }
+
 cbr = "{"
 cbl = "}"
 sbr = "["
@@ -41,4 +40,4 @@ q = "\""
 km = ","
 
 _ "whitespace"
-  = [ \t\n\r]*
+  = spaces:[ \t\n\r]* {return " "; }

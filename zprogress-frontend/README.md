@@ -1,149 +1,51 @@
-hal parser grammer:
+{
+class Field {
+ constructor(name, value) {
+  this.name = name;
+  this.value = value;
+ }
+}
+
+class Link {
+ constructor(relation, url) {
+  this.relation = relation;
+  this.url = url;
+ }
+}
+}
+
 start = hal
 
-hal = cbr _ embedded? _ (km _ links)+ _ (km _ affordances)? _ cbl _
-embedded = embedded_k cl _ cbr _ data _ cbl
-data = resource:identifier_q cl _ sbr _ elements _ sbl
-// {...}, {...},{...},{...} 
-elements = element _ km _ elements / element
-// {...}
-element = cbr _ content _ cbl
-content = fields / field
-fields = links / field _ km _ fields / field
-field = identifier_q cl _ identifier_q / identifier_q cl _ element / identifier_q cl _ array / identifier_q cl _ boolean
-array = sbr _ field+ _ sbl / sbr _ elements _ sbl
-boolean = "true" / "false"
-links = links_k cl _ elements
-affordances = affordances_k cl _ elements
+hal = resource: identifier_q ":[" elements: elements "]" { return {resource: resource, elements: elements};}
+elements = element: ("{" (links / field)+ "}" ","?)+ {
+ var ret = [];
+ element.flat().forEach(e => {
+  if (Array.isArray(e)) {
+   ret.push({ fields: e })
+  }
+ });
+ return ret;
+}
+field = name:identifier_q ":" value:(identifier_q / null / boolean) ","? { return new Field(name, value);}
+links = links_k ":{" rel: identifier_q ":{" href_k ":" url: identifier_q "}"{ return new Link(rel, url);} 
 
-embedded_k = q "_embedded" q
-links_k = q "_links" q
-affordances_k = q "_templates" q
-identifier= char:.+ { return char; }
-identifier_q = q identifier q
-cbr = "{"
-cbl = "}"
-sbr = "["
-sbl = "]"
+
+
+embedded_k = q key:"_embedded" q { return key; }
+links_k = q key:"_links" q { return key; }
+href_k = q key: "href" q { return key; }
+affordances_k = q key:"_templates" q { return key; }
+null = "null"
+boolean = "true" / "false"
+identifier_q = q string:[ a-zA-Z0-9\-:\/]+ q { return string.join(""); }
+
+cbl = "{"
+cbr = "}"
+sbo = "["
+sbc = "]"
 cl = ":"
 q = "\""
 km = ","
 
 _ "whitespace"
-  = [ \t\n\r]*
-
-== Example of an empty json == 
-
-
-{
-    "_links": {
-        "profiles": {
-            "href": "http://localhost:8080/goals/profile"
-        },
-        "self": {
-            "href": "http://localhost:8080/goals"
-        }
-    },
-    "_templates": {
-        "default": {
-            "method": "post",
-            "properties": [
-                {
-                    "name": "deadline",
-                    "required": true
-                },
-                {
-                    "name": "description",
-                    "required": true
-                },
-                {
-                    "name": "name",
-                    "required": true
-                }
-            ]
-        },
-        "putGoal": {
-            "method": "put",
-            "properties": [
-                {
-                    "name": "deadline",
-                    "required": true
-                },
-                {
-                    "name": "description",
-                    "required": true
-                },
-                {
-                    "name": "name",
-                    "required": true
-                }
-            ]
-        }
-    }
-}
-
-== parse completion == 
-{
- "_embedded": { 
-   "goal": [ 
-     { 
-      "nested": {"xx": "yy"},
-      "dd": "hi", 
-      "xx": "blub", 
-      "mm": "hihi",
-                      "_links": {
-                    "steps": {
-                        "href": "xxx"
-                    },
-                     "resource": {
-                        "href": "yy"
-                       }
-                }
-     },
-     { 
-      "dd": "hi", 
-      "xx": "blub", 
-      "mm": "hihi" 
-     } 
-    ] 
-  }, "_links": { 
-         "self": "xxx" 
-     }
-,
-    "_templates": {
-        "default": {
-            "method": "post",
-            "properties": [
-                {
-                    "name": "deadline",
-                    "required": true
-                },
-                {
-                    "name": "description",
-                    "required": true
-                },
-                {
-                    "name": "name",
-                    "required": true
-                }
-            ]
-        },
-        "putGoal": {
-            "method": "put",
-            "properties": [
-                {
-                    "name": "deadline",
-                    "required": true
-                },
-                {
-                    "name": "description",
-                    "required": true
-                },
-                {
-                    "name": "name",
-                    "required": true
-                }
-            ]
-        }
-    }
-}
+  = spaces:[ \t\n\r]* {return " "; }

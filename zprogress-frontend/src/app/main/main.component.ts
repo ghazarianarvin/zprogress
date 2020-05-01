@@ -20,7 +20,9 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     this.mainService.callBase().subscribe(res => {
-      this.dummyContent = JSON.stringify(res, null, 2).replace(/\s/g, '');
+      this.dummyContent =
+        JSON.stringify(res, null, 2)
+          .replace(/\s/g, '');
       console.log(
         peg$parse(this.dummyContent));
     });
