@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MainService} from '../shared/MainService';
 import {AuthenticationService} from '../shared/AuthenticationService';
 import {Router} from '@angular/router';
+import {Element} from '@angular/compiler';
 
 declare var peg$parse: any;
 
@@ -12,7 +13,8 @@ declare var peg$parse: any;
 })
 export class MainComponent implements OnInit {
 
-  dummyContent: string;
+  parsedContent: any;
+  resources: [];
 
   constructor(private mainService: MainService,
               private authenticationService: AuthenticationService,
@@ -20,11 +22,8 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     this.mainService.callBase().subscribe(res => {
-      this.dummyContent =
-        JSON.stringify(res, null, 2)
-          .replace(/\s/g, '');
-      console.log(
-        peg$parse(this.dummyContent));
+      console.log(this.parsedContent = peg$parse(JSON.stringify(res, null, 2).replace(/\s/g, '')));
+      this.resources = this.parsedContent.elements;
     });
   }
 

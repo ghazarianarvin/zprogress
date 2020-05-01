@@ -17,19 +17,9 @@
     <nav class="col-md-2 d-none d-md-block bg-light sidebar">
       <div class="sidebar-sticky">
         <ul class="nav flex-column">
-          <li class="nav-item">
+          <li class="nav-item"  *ngFor="let resource of resources">
             <a class="nav-link active" href="#">
-              Goal 1
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              Goal 2
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              Goal 3
+              {{resource.getValueOfField('name')}}
             </a>
           </li>
         </ul>
@@ -38,7 +28,7 @@
     </nav>
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-      {{dummyContent}}
+      {{parsedContent}}
     </main>
   </div>
 </div>

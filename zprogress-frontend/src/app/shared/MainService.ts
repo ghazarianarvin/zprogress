@@ -12,18 +12,9 @@ export class MainService {
   }
 
   callBase() {
-    return this.http.get(this.url, this.header())
-      .pipe(
-        map(resp => this.parseKeys(resp))
-      );
+    return this.http.get(this.url, this.header());
   }
 
-  private parseKeys(data) {
-    Object.keys(data).forEach(key => {
-      console.log(data[key] + ' <<<<<<<<<<<');
-    });
-    return data;
-  }
 
   private header() {
     const httpOptions = {

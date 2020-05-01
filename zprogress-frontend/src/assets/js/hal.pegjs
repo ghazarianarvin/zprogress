@@ -4,6 +4,15 @@ class Element {
     	this.fields = fields
         this.links = links
     }
+
+        getValueOfField(name) {
+          let i = 0, len = this.fields.length;
+          for (; i < len; i++) {
+            if (this.fields[i].name === name) {
+              return this.fields[i].value
+            }
+          }
+        }
 }
 class Field {
   constructor(name, value) {
@@ -21,13 +30,14 @@ class Links {
   	this.elements.push(link)
   }
 
-  profileLink() {
-  	this.elements.forEach(e => {
-    	if (e.rel === 'profiles') {
-        	return e;
+    profileLink() {
+      let i = 0, len = this.elements.length;
+      for (; i < len; i++) {
+        if (this.elements[i].rel === 'profiles') {
+          return this.elements[i];
         }
-    })
-  }
+      }
+    }
 }
 }
 
