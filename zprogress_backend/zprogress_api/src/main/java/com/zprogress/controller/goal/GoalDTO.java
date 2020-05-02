@@ -14,18 +14,21 @@ public class GoalDTO implements Serializable {
 
     @JsonIgnore
     private Long id;
+
     @NotNull
     @NotBlank
     private String name;
+
     @NotNull
     @NotBlank
     private String description;
+
     @NotNull
-    private LocalDate deadline;
+    private LocalDate d_deadline;
 
     public GoalDTO(Goal goal) {
         this.setName(goal.getName());
-        this.setDeadline(goal.getDeadline());
+        this.setD_deadline(goal.getDeadline());
         this.setDescription(goal.getDescription());
         this.setId(goal.getId());
     }
@@ -46,12 +49,12 @@ public class GoalDTO implements Serializable {
         this.description = description;
     }
 
-    public LocalDate getDeadline() {
-        return deadline;
+    public LocalDate getD_deadline() {
+        return d_deadline;
     }
 
-    public void setDeadline(LocalDate deadline) {
-        this.deadline = deadline;
+    public void setD_deadline(LocalDate d_deadline) {
+        this.d_deadline = d_deadline;
     }
 
     public Long getId() {
