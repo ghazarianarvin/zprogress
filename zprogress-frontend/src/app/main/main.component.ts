@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {MainService} from '../shared/MainService';
 import {AuthenticationService} from '../shared/AuthenticationService';
 import {Router} from '@angular/router';
-import {Element} from '@angular/compiler';
 
 declare var peg$parse: any;
 
@@ -22,7 +21,7 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     this.mainService.callBase().subscribe(res => {
-      console.log(this.parsedContent = peg$parse(JSON.stringify(res, null, 2).replace(/\s/g, '')));
+      console.log(this.parsedContent = peg$parse(JSON.stringify(res, null).replace(/\n/g, '')));
       this.resources = this.parsedContent.elements;
     });
   }
