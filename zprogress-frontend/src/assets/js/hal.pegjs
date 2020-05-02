@@ -1,4 +1,33 @@
 {
+    class Resource {
+    	constructor(resource, elements) {
+        this.resource = resource
+        this.elements = elements
+        this.links
+        this.affordances
+      }
+
+      canCreateResource() {
+        return this.canDo("post")
+      }
+
+
+      canUpdateResource() {
+        return this.canDo("put")
+      }
+
+      canDo(method) {
+        let i = 0, len = this.affordances.length;
+        for (; i < len; i++) {
+          var affordance = this.affordances[i]
+          if (affordance.method === method) {
+            return true
+          }
+        }
+        return false
+      }
+    }
+
   class Affordance {
     constructor(method, fieldMetadata) {
       this.method = method
@@ -30,6 +59,10 @@
         }
       }
     }
+
+    getLinkByRel(rel) {
+      return this.links.getLinkByRel(rel)
+    }
   }
 
   class Field {
@@ -48,25 +81,25 @@
       this.elements.push(link)
     }
 
-    profileLink() {
-      let i = 0, len = this.elements.length;
-      for (; i < len; i++) {
-        if (this.elements[i].rel === 'profiles') {
-          return this.elements[i];
+      getLinkByRel(rel) {
+        let i = 0, len = this.elements.length;
+        for (; i < len; i++) {
+          if (this.elements[i].rel === rel) {
+            return this.elements[i].url;
+          }
         }
       }
-    }
   }
 }
 
 start = "{" embedded_k ":{" resource: resource "}" links:(","links)? affordances:(","affordances)?"}"
 {
 	resource.links = links[1]
-  resource.affordances = affordances[1]
+  	resource.affordances = affordances[1]
 	return resource;
 }
 
-resource = resourceName: identifier_q ":[" elements: elements "]" { return {resource: resourceName, elements: elements} }
+resource = resourceName: identifier_q ":[" elements: elements "]" { return new Resource(resourceName, elements); }
 elements = element:("{" (field+) links? "}" ","?)+
 {
   var ret = []
@@ -92,7 +125,7 @@ elements = element:("{" (field+) links? "}" ","?)+
 
   return ret;
 }
-field = name:identifier_q ":" value:(identifier_q / null / boolean) ","? { return new Field(name, value);}
+field = name:identifier_q ":" value:(identifier_q / null / boolean / number) ","? { return new Field(name, value);}
 links = links_k ":{" links: (identifier_q ":{" href_k ":" identifier_q "}" ","?)+ "}"
 {
   var l = new Links()
@@ -143,7 +176,9 @@ properties_k = q "properties" q
 
 null = "null"
 boolean = "true" / "false"
-identifier_q = q string:[ a-zA-Z0-9\-:\/_]+ q { return string.join("") }
+identifier_q = q string:[ a-zA-Z0-9\-:\/_\.]+ q { return string.join("") }
+number = chars:[0-9]+ frac:numberFraction? { return parseFloat(chars.join('') + frac); }
+numberFraction  = "." chars:[0-9]* { return "." + chars.join(''); }
 
 cbl = "{"
 cbr = "}"

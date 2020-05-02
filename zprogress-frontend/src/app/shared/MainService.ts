@@ -15,6 +15,9 @@ export class MainService {
     return this.http.get(this.url, this.header());
   }
 
+  get(url) {
+    return this.http.get(url, this.header());
+  }
 
   private header() {
     const httpOptions = {

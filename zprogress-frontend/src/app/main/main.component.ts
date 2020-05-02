@@ -12,8 +12,7 @@ declare var peg$parse: any;
 })
 export class MainComponent implements OnInit {
 
-  parsedContent: any;
-  resources: [];
+  content: any;
 
   constructor(private mainService: MainService,
               private authenticationService: AuthenticationService,
@@ -21,13 +20,18 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     this.mainService.callBase().subscribe(res => {
-      console.log(this.parsedContent = peg$parse(JSON.stringify(res, null).replace(/\n/g, '')));
-      this.resources = this.parsedContent.elements;
+      this.content = peg$parse(JSON.stringify(res, null).replace(/\n/g, ''));
+      console.log(this.content);
+    });
+  }
+
+  selectSingleResource(url: string) {
+    this.mainService.get(url).subscribe(res => {
+      console.log(res);
     });
   }
 
   logout() {
-    console.log('logout');
     this.authenticationService.logout();
     this.router.navigate(['/login']);
   }

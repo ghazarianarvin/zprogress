@@ -151,77 +151,77 @@ function peg$parse(input, options) {
       peg$c7 = peg$literalExpectation(",", false),
       peg$c8 = function(resource, links, affordances) {
       	resource.links = links[1]
-          resource.affordances = affordances[1]
+        	resource.affordances = affordances[1]
       	return resource;
       },
       peg$c9 = ":[",
       peg$c10 = peg$literalExpectation(":[", false),
       peg$c11 = "]",
       peg$c12 = peg$literalExpectation("]", false),
-      peg$c13 = function(resourceName, elements) { return {resource: resourceName, elements: elements} },
+      peg$c13 = function(resourceName, elements) { return new Resource(resourceName, elements); },
       peg$c14 = function(element) {
-      	var ret = []
-       	element.forEach(e => {
+        var ret = []
+        element.forEach(e => {
 
-      		if (e && Array.isArray(e)) {
-              	var fields
-                  var links
-              	e.forEach(f => {
-                  	if (f && typeof f !== 'string') {
-                      	if (Array.isArray(f)) { // fields
-                          	fields = f
-                          }
-                     		if (typeof f === 'object') { // link
-                          	links = f
-                          }
-                      }
-                  })
-                  ret.push(new Element(fields, links))
+          if (e && Array.isArray(e)) {
+            var fields
+            var links
+            e.forEach(f => {
+              if (f && typeof f !== 'string') {
+                if (Array.isArray(f)) { // fields
+                  fields = f
+                }
+                if (typeof f === 'object') { // link
+                  links = f
+                }
               }
+            })
+            ret.push(new Element(fields, links))
+          }
 
-      	});
+        });
 
-      	return ret;
+        return ret;
       },
       peg$c15 = ":",
       peg$c16 = peg$literalExpectation(":", false),
       peg$c17 = function(name, value) { return new Field(name, value);},
       peg$c18 = function(links) {
-      	var l = new Links()
-          links.forEach(e => {
-          	l.addNewLink({rel: e[0], url: e[4]})
-          })
+        var l = new Links()
+        links.forEach(e => {
+          l.addNewLink({rel: e[0], url: e[4]})
+        })
 
-      	return l
+        return l
       },
       peg$c19 = function(affordances) {
-      	var affordancesList = []
-          affordances.forEach(a => affordancesList.push(a[0]))
-          return affordancesList
+        var affordancesList = []
+        affordances.forEach(a => affordancesList.push(a[0]))
+        return affordancesList
       },
       peg$c20 = function(affordance) { return affordance },
       peg$c21 = function(method, metadata) { return new Affordance (method, metadata) },
       peg$c22 = function(metadata) {
-       	var fieldMetadata = new FieldMetaData()
-          var mdFields = metadata[1]
-          let i = 0, len = mdFields.length
-          for (; i < len; i++) {
-                if (mdFields[i].name === "name") {
-                    fieldMetadata.name = mdFields[i].value
-                    if (fieldMetadata.name.startsWith("d_") || fieldMetadata.name.startsWith("df_") || fieldMetadata.name.startsWith("dp_")) {
-                    	fieldMetadata.isDate = true
-                    } else {
-                    	fieldMetadata.isDate = false
-                    }
-                } else if (mdFields[i].name === "required") {
-                    fieldMetadata.required = mdFields[i].value
-                } else if (mdFields[i].name === "regex") {
-                    fieldMetadata.regex = mdFields[i].value
-                } else if (mdFields[i].name === "prompt") {
-                    fieldMetadata.prompt = mdFields[i].value
-                }
+        var fieldMetadata = new FieldMetaData()
+        var mdFields = metadata[1]
+        let i = 0, len = mdFields.length
+        for (; i < len; i++) {
+          if (mdFields[i].name === "name") {
+            fieldMetadata.name = mdFields[i].value
+            if (fieldMetadata.name.startsWith("d_") || fieldMetadata.name.startsWith("df_") || fieldMetadata.name.startsWith("dp_")) {
+              fieldMetadata.isDate = true
+            } else {
+              fieldMetadata.isDate = false
+            }
+          } else if (mdFields[i].name === "required") {
+            fieldMetadata.required = mdFields[i].value
+          } else if (mdFields[i].name === "regex") {
+            fieldMetadata.regex = mdFields[i].value
+          } else if (mdFields[i].name === "prompt") {
+            fieldMetadata.prompt = mdFields[i].value
           }
-          return fieldMetadata
+        }
+        return fieldMetadata
       },
       peg$c23 = "_embedded",
       peg$c24 = peg$literalExpectation("_embedded", false),
@@ -242,17 +242,23 @@ function peg$parse(input, options) {
       peg$c39 = peg$literalExpectation("true", false),
       peg$c40 = "false",
       peg$c41 = peg$literalExpectation("false", false),
-      peg$c42 = /^[ a-zA-Z0-9\-:\/_]/,
-      peg$c43 = peg$classExpectation([" ", ["a", "z"], ["A", "Z"], ["0", "9"], "-", ":", "/", "_"], false, false),
+      peg$c42 = /^[ a-zA-Z0-9\-:\/_.]/,
+      peg$c43 = peg$classExpectation([" ", ["a", "z"], ["A", "Z"], ["0", "9"], "-", ":", "/", "_", "."], false, false),
       peg$c44 = function(string) { return string.join("") },
-      peg$c45 = "[",
-      peg$c46 = peg$literalExpectation("[", false),
-      peg$c47 = "\"",
-      peg$c48 = peg$literalExpectation("\"", false),
-      peg$c49 = peg$otherExpectation("whitespace"),
-      peg$c50 = /^[ \t\n\r]/,
-      peg$c51 = peg$classExpectation([" ", "\t", "\n", "\r"], false, false),
-      peg$c52 = function(spaces) {return " " },
+      peg$c45 = /^[0-9]/,
+      peg$c46 = peg$classExpectation([["0", "9"]], false, false),
+      peg$c47 = function(chars, frac) { return parseFloat(chars.join('') + frac); },
+      peg$c48 = ".",
+      peg$c49 = peg$literalExpectation(".", false),
+      peg$c50 = function(chars) { return "." + chars.join(''); },
+      peg$c51 = "[",
+      peg$c52 = peg$literalExpectation("[", false),
+      peg$c53 = "\"",
+      peg$c54 = peg$literalExpectation("\"", false),
+      peg$c55 = peg$otherExpectation("whitespace"),
+      peg$c56 = /^[ \t\n\r]/,
+      peg$c57 = peg$classExpectation([" ", "\t", "\n", "\r"], false, false),
+      peg$c58 = function(spaces) {return " " },
 
       peg$currPos          = 0,
       peg$savedPos         = 0,
@@ -738,6 +744,9 @@ function peg$parse(input, options) {
           s3 = peg$parsenull();
           if (s3 === peg$FAILED) {
             s3 = peg$parseboolean();
+            if (s3 === peg$FAILED) {
+              s3 = peg$parsenumber();
+            }
           }
         }
         if (s3 !== peg$FAILED) {
@@ -1579,6 +1588,99 @@ function peg$parse(input, options) {
     return s0;
   }
 
+  function peg$parsenumber() {
+    var s0, s1, s2;
+
+    s0 = peg$currPos;
+    s1 = [];
+    if (peg$c45.test(input.charAt(peg$currPos))) {
+      s2 = input.charAt(peg$currPos);
+      peg$currPos++;
+    } else {
+      s2 = peg$FAILED;
+      if (peg$silentFails === 0) { peg$fail(peg$c46); }
+    }
+    if (s2 !== peg$FAILED) {
+      while (s2 !== peg$FAILED) {
+        s1.push(s2);
+        if (peg$c45.test(input.charAt(peg$currPos))) {
+          s2 = input.charAt(peg$currPos);
+          peg$currPos++;
+        } else {
+          s2 = peg$FAILED;
+          if (peg$silentFails === 0) { peg$fail(peg$c46); }
+        }
+      }
+    } else {
+      s1 = peg$FAILED;
+    }
+    if (s1 !== peg$FAILED) {
+      s2 = peg$parsenumberFraction();
+      if (s2 === peg$FAILED) {
+        s2 = null;
+      }
+      if (s2 !== peg$FAILED) {
+        peg$savedPos = s0;
+        s1 = peg$c47(s1, s2);
+        s0 = s1;
+      } else {
+        peg$currPos = s0;
+        s0 = peg$FAILED;
+      }
+    } else {
+      peg$currPos = s0;
+      s0 = peg$FAILED;
+    }
+
+    return s0;
+  }
+
+  function peg$parsenumberFraction() {
+    var s0, s1, s2, s3;
+
+    s0 = peg$currPos;
+    if (input.charCodeAt(peg$currPos) === 46) {
+      s1 = peg$c48;
+      peg$currPos++;
+    } else {
+      s1 = peg$FAILED;
+      if (peg$silentFails === 0) { peg$fail(peg$c49); }
+    }
+    if (s1 !== peg$FAILED) {
+      s2 = [];
+      if (peg$c45.test(input.charAt(peg$currPos))) {
+        s3 = input.charAt(peg$currPos);
+        peg$currPos++;
+      } else {
+        s3 = peg$FAILED;
+        if (peg$silentFails === 0) { peg$fail(peg$c46); }
+      }
+      while (s3 !== peg$FAILED) {
+        s2.push(s3);
+        if (peg$c45.test(input.charAt(peg$currPos))) {
+          s3 = input.charAt(peg$currPos);
+          peg$currPos++;
+        } else {
+          s3 = peg$FAILED;
+          if (peg$silentFails === 0) { peg$fail(peg$c46); }
+        }
+      }
+      if (s2 !== peg$FAILED) {
+        peg$savedPos = s0;
+        s1 = peg$c50(s2);
+        s0 = s1;
+      } else {
+        peg$currPos = s0;
+        s0 = peg$FAILED;
+      }
+    } else {
+      peg$currPos = s0;
+      s0 = peg$FAILED;
+    }
+
+    return s0;
+  }
+
   function peg$parsecbl() {
     var s0;
 
@@ -1611,11 +1713,11 @@ function peg$parse(input, options) {
     var s0;
 
     if (input.charCodeAt(peg$currPos) === 91) {
-      s0 = peg$c45;
+      s0 = peg$c51;
       peg$currPos++;
     } else {
       s0 = peg$FAILED;
-      if (peg$silentFails === 0) { peg$fail(peg$c46); }
+      if (peg$silentFails === 0) { peg$fail(peg$c52); }
     }
 
     return s0;
@@ -1653,11 +1755,11 @@ function peg$parse(input, options) {
     var s0;
 
     if (input.charCodeAt(peg$currPos) === 34) {
-      s0 = peg$c47;
+      s0 = peg$c53;
       peg$currPos++;
     } else {
       s0 = peg$FAILED;
-      if (peg$silentFails === 0) { peg$fail(peg$c48); }
+      if (peg$silentFails === 0) { peg$fail(peg$c54); }
     }
 
     return s0;
@@ -1683,93 +1785,129 @@ function peg$parse(input, options) {
     peg$silentFails++;
     s0 = peg$currPos;
     s1 = [];
-    if (peg$c50.test(input.charAt(peg$currPos))) {
+    if (peg$c56.test(input.charAt(peg$currPos))) {
       s2 = input.charAt(peg$currPos);
       peg$currPos++;
     } else {
       s2 = peg$FAILED;
-      if (peg$silentFails === 0) { peg$fail(peg$c51); }
+      if (peg$silentFails === 0) { peg$fail(peg$c57); }
     }
     while (s2 !== peg$FAILED) {
       s1.push(s2);
-      if (peg$c50.test(input.charAt(peg$currPos))) {
+      if (peg$c56.test(input.charAt(peg$currPos))) {
         s2 = input.charAt(peg$currPos);
         peg$currPos++;
       } else {
         s2 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c51); }
+        if (peg$silentFails === 0) { peg$fail(peg$c57); }
       }
     }
     if (s1 !== peg$FAILED) {
       peg$savedPos = s0;
-      s1 = peg$c52(s1);
+      s1 = peg$c58(s1);
     }
     s0 = s1;
     peg$silentFails--;
     if (s0 === peg$FAILED) {
       s1 = peg$FAILED;
-      if (peg$silentFails === 0) { peg$fail(peg$c49); }
+      if (peg$silentFails === 0) { peg$fail(peg$c55); }
     }
 
     return s0;
   }
 
 
-  class Affordance {
-  	constructor(method, fieldMetadata) {
-      	this.method = method
-          this.fieldMetadata = fieldMetadata
-      }
-  }
-  class FieldMetaData {
-  	constructor() {
-      	this.name
-          this.regex
-          this.required
-          this.prompt
-          this.isDate
-      }
-  }
-  class Element {
-  	constructor(fields, links) {
-      	this.fields = fields
-          this.links = links
-      }
+      class Resource {
+      	constructor(resource, elements) {
+          this.resource = resource
+          this.elements = elements
+          this.links
+          this.affordances
+        }
 
-          getValueOfField(name) {
-            let i = 0, len = this.fields.length;
-            for (; i < len; i++) {
-              if (this.fields[i].name === name) {
-                return this.fields[i].value
-              }
+        canCreateResource() {
+          return this.canDo("post")
+        }
+
+
+        canUpdateResource() {
+          return this.canDo("put")
+        }
+
+        canDo(method) {
+          let i = 0, len = this.affordances.length;
+          for (; i < len; i++) {
+            var affordance = this.affordances[i]
+            if (affordance.method === method) {
+              return true
             }
           }
-  }
-  class Field {
-    constructor(name, value) {
-      this.name = name
-      this.value = value
-    }
-  }
+          return false
+        }
+      }
 
-  class Links {
-    constructor() {
-    	this.elements = []
+    class Affordance {
+      constructor(method, fieldMetadata) {
+        this.method = method
+        this.fieldMetadata = fieldMetadata
+      }
     }
 
-    addNewLink(link) {
-    	this.elements.push(link)
+    class FieldMetaData {
+      constructor() {
+        this.name
+        this.regex
+        this.required
+        this.prompt
+        this.isDate
+      }
     }
 
-      profileLink() {
-        let i = 0, len = this.elements.length;
+    class Element {
+      constructor(fields, links) {
+        this.fields = fields
+        this.links = links
+      }
+
+      getValueOfField(name) {
+        let i = 0, len = this.fields.length;
         for (; i < len; i++) {
-          if (this.elements[i].rel === 'profiles') {
-            return this.elements[i];
+          if (this.fields[i].name === name) {
+            return this.fields[i].value
           }
         }
       }
-  }
+
+      getLinkByRel(rel) {
+        return this.links.getLinkByRel(rel)
+      }
+    }
+
+    class Field {
+      constructor(name, value) {
+        this.name = name
+        this.value = value
+      }
+    }
+
+    class Links {
+      constructor() {
+        this.elements = []
+      }
+
+      addNewLink(link) {
+        this.elements.push(link)
+      }
+
+        getLinkByRel(rel) {
+          let i = 0, len = this.elements.length;
+          for (; i < len; i++) {
+            if (this.elements[i].rel === rel) {
+              return this.elements[i].url;
+            }
+          }
+        }
+    }
 
 
   peg$result = peg$startRuleFunction();
@@ -1790,4 +1928,3 @@ function peg$parse(input, options) {
     );
   }
 }
-
