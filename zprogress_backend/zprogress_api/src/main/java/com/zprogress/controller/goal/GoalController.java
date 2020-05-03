@@ -25,7 +25,7 @@ public class GoalController {
         var goals = goalService.goals(clientContext.getUsername());
         var body = new CollectionModel(goals
                 .stream()
-                .map(goal -> new GoalEntityModel(new GoalDTO(goal), false))
+                .map(goal -> new GoalEntityModel(new GoalDTO(goal), true))
                 .collect(Collectors.toList()));
         body.add(
                 linkTo(methodOn(GoalController.class).goals()).withSelfRel()
@@ -37,7 +37,7 @@ public class GoalController {
     @GetMapping("/{goalId}")
     public GoalEntityModel getGoal(@PathVariable Long goalId) {
         var goal = goalService.get(goalId);
-        return new GoalEntityModel(new GoalDTO(goal), true);
+        return new GoalEntityModel(new GoalDTO(goal), false);
     }
 
     // TODO don't return body --> put id in location

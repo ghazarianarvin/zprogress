@@ -11,38 +11,41 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Validated
 @RestController
 public class StepController {
 
-    // TODO don't return body --> put id in location
-    @PostMapping("/goals/{goalId}/steps")
-    public ResponseEntity<StepEntityModel> steps(@Min(1) @PathVariable Long goalId, @Valid @RequestBody Step step) {
-        try {
-            var newStep = stepService.create(step, goalId);
-            return new ResponseEntity<>(new StepEntityModel(new StepDTO(newStep)), HttpStatus.CREATED);
-        } catch (GoalNotFoundValidationException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
     @GetMapping("/goals/{goalId}/steps")
-    public ResponseEntity<CollectionModel<StepEntityModel>> steps(@Min(1) @PathVariable Long goalId) {
+    public ResponseEntity<CollectionModel<StepEntityModel>> steps(@PathVariable Long goalId) {
         var steps = stepService.getByGoalId(goalId);
         var body = new CollectionModel(steps
                 .stream()
-                .map(StepDTO::new)
+                .map(step -> new StepEntityModel(new StepDTO(step), goalId,true))
                 .collect(Collectors.toList()));
         body.add(linkTo(methodOn(StepController.class).steps(goalId)).withSelfRel()
-                .andAffordance(afford(methodOn(StepController.class).steps(goalId,null))) // Post affordance
+                .andAffordance(afford(methodOn(StepController.class).postStep(goalId,null))) // Post affordance
         );
         return ResponseEntity.ok(body);
+    }
+
+    @GetMapping("/goals/{goalId}/steps/{stepId}")
+    public StepEntityModel getStep(@PathVariable Long goalId, @PathVariable Long stepId) {
+        return new StepEntityModel(null, goalId,false);
+    }
+
+    // TODO don't return body --> put id in location
+    @PostMapping("/goals/{goalId}/steps")
+    public ResponseEntity<StepEntityModel> postStep(@PathVariable Long goalId, @Valid @RequestBody Step step) {
+        try {
+            var newStep = stepService.create(step, goalId);
+            return new ResponseEntity<>(new StepEntityModel(new StepDTO(newStep), goalId,false), HttpStatus.CREATED);
+        } catch (GoalNotFoundValidationException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     private StepService stepService;

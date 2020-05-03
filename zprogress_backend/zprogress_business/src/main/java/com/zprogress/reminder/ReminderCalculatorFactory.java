@@ -12,11 +12,11 @@ public class ReminderCalculatorFactory {
 
     public static ReminderCalculator reminderCalculatorFor(Repetition repetition) {
         switch (repetition) {
-            case daily:
+            case DAILY:
                 return new DailyReminderCalculator();
-            case weekly:
+            case WEEKLY:
                 return new WeeklyReminderCalculator();
-            case monthly:
+            case MONTHLY:
                 return new MonthlyReminderCalculator();
             default: // yearly
                 return new YearlyReminderCalculator();

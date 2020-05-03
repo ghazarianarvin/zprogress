@@ -1,8 +1,8 @@
 package com.zprogress.domain;
 
 public enum Repetition {
-    daily,
-    weekly,
-    monthly,
-    yearly
+    DAILY,
+    WEEKLY,
+    MONTHLY,
+    YEARLY
 }

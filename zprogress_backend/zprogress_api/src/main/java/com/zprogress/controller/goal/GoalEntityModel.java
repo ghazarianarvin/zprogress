@@ -7,13 +7,14 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 public class GoalEntityModel extends EntityModel<GoalDTO> {
 
-    public GoalEntityModel(GoalDTO goal, boolean withAffordance) {
+    public GoalEntityModel(GoalDTO goal, boolean colleciton) {
         super(goal);
-        var stepLink = linkTo(methodOn(StepController.class).steps(goal.getId())).withRel("steps");
-        var selfLink = withAffordance ?
-                linkTo(methodOn(GoalController.class).getGoal(goal.getId())).withSelfRel()
-                        .andAffordance(afford(methodOn(GoalController.class).putGoal(goal.getId(), null))) :
-                linkTo(methodOn(GoalController.class).getGoal(goal.getId())).withSelfRel();
-        add(selfLink, stepLink);
+        if (colleciton) {
+            add(linkTo(methodOn(GoalController.class).getGoal(goal.getId())).withSelfRel());
+        } else {
+            add(linkTo(methodOn(GoalController.class).getGoal(goal.getId())).withSelfRel()
+                            .andAffordance(afford(methodOn(GoalController.class).putGoal(goal.getId(), null))),
+                    linkTo(methodOn(StepController.class).steps(goal.getId())).withRel("steps"));
+        }
     }
 }

@@ -2,11 +2,13 @@ package com.zprogress.controller.step;
 
 import com.zprogress.domain.Repetition;
 import com.zprogress.domain.Step;
+import org.springframework.hateoas.server.core.Relation;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@Relation(collectionRelation = "steps")
 public class StepDTO {
 
     private Long id;

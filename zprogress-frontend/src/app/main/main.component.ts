@@ -13,6 +13,7 @@ declare var peg$parse: any;
 export class MainComponent implements OnInit {
 
   content: any;
+  selectedContent: any;
 
   constructor(private mainService: MainService,
               private authenticationService: AuthenticationService,
@@ -27,7 +28,8 @@ export class MainComponent implements OnInit {
 
   selectSingleResource(url: string) {
     this.mainService.get(url).subscribe(res => {
-      console.log(res);
+      this.selectedContent = peg$parse(JSON.stringify(res, null).replace(/\n/g, ''));
+      console.log(this.selectedContent);
     });
   }
 

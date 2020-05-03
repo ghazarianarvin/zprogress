@@ -49,6 +49,7 @@
     constructor(fields, links) {
       this.fields = fields
       this.links = links
+      this.affordance
     }
 
     getValueOfField(name) {
@@ -63,7 +64,22 @@
     getLinkByRel(rel) {
       return this.links.getLinkByRel(rel)
     }
-  }
+
+    canCreateResource() {
+      return this.canDo("post")
+    }
+
+
+    canUpdateResource() {
+      return this.canDo("put")
+    }
+
+    canDo(method) {
+      if (this.affordance.method === method) {
+        return true
+      }
+      return false
+    }
 
   class Field {
     constructor(name, value) {
@@ -92,7 +108,16 @@
   }
 }
 
-start = "{" embedded_k ":{" resource: resource "}" links:(","links)? affordances:(","affordances)?"}"
+start = "{" result: (collection / single) "}" {return result }
+
+single = fields: (field+) links: links? "," ? affordances: affordances
+{
+	var element = new Element(fields, links)
+    element.affordance = affordances[0]
+    return element
+}
+
+collection =  embedded_k ":{" resource: resource "}" links:(","links)? affordances:(","affordances)?
 {
 	resource.links = links[1]
   	resource.affordances = affordances[1]
@@ -179,14 +204,7 @@ boolean = "true" / "false"
 identifier_q = q string:[ a-zA-Z0-9\-:\/_\.]+ q { return string.join("") }
 number = chars:[0-9]+ frac:numberFraction? { return parseFloat(chars.join('') + frac); }
 numberFraction  = "." chars:[0-9]* { return "." + chars.join(''); }
-
-cbl = "{"
-cbr = "}"
-sbo = "["
-sbc = "]"
-cl = ":"
 q = "\""
-km = ","
 
 _ "whitespace"
   = spaces:[ \t\n\r]* {return " " }

@@ -21,15 +21,20 @@
             <a class="nav-link active" (click)="selectSingleResource(element.getLinkByRel('self'))">
               {{element.getValueOfField('name')}}
             </a>
+            <ul class="nested">
+              <li><i class="far fa-bell ic-w mr-1"></i>Offers</li>
+              <li><i class="far fa-address-book ic-w mr-1"></i>Contacts</li>
+            </ul>
           </li>
         </ul>
         <button type="button" class="btn btn-primary" *ngIf="content.canCreateResource()">create new {{content.resource}}</button>
-        <button type="button" class="btn btn-success" *ngIf="content.canUpdateResource()">create new {{content.resource}}</button>
+        <button type="button" class="btn btn-success" *ngIf="selectedContent!= null  && selectedContent.canUpdateResource()">update {{selectedContent.getValueOfField('name')}}</button>
       </div>
     </nav>
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
       TODO content goes here.
+      {{selectedContent == null}}
     </main>
   </div>
 </div>
