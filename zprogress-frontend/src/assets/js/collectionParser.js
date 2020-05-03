@@ -1875,6 +1875,10 @@ function peg$parse(input, options) {
         }
       }
 
+      getLinkByRel(rel) {
+        return this.links.getLinkByRel(rel)
+      }
+
       canCreateResource() {
         return this.canDo("post")
       }
@@ -1885,17 +1889,12 @@ function peg$parse(input, options) {
       }
 
       canDo(method) {
-
         if (this.affordance.method === method) {
           return true
         }
         return false
       }
-
-      getLinkByRel(rel) {
-        return this.links.getLinkByRel(rel)
-      }
-    }
+   }
 
     class Field {
       constructor(name, value) {
@@ -1942,4 +1941,3 @@ function peg$parse(input, options) {
     );
   }
 }
-

@@ -80,6 +80,7 @@
       }
       return false
     }
+ }
 
   class Field {
     constructor(name, value) {
