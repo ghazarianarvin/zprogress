@@ -1,10 +1,69 @@
 {
-    class Resource {
-    	constructor(resource, elements) {
-        this.resource = resource
-        this.elements = elements
-        this.links
-        this.affordances
+      class Resource {
+      	constructor(resource, elements) {
+          this.resource = resource
+          this.elements = elements
+          this.links
+          this.affordances
+        }
+
+        canCreateResource() {
+          return this.canDo("post")
+        }
+
+
+        canUpdateResource() {
+          return this.canDo("put")
+        }
+
+        canDo(method) {
+          let i = 0, len = this.affordances.length;
+          for (; i < len; i++) {
+            var affordance = this.affordances[i]
+            if (affordance.method === method) {
+              return true
+            }
+          }
+          return false
+        }
+      }
+
+    class Affordance {
+      constructor(method, fieldMetadata) {
+        this.method = method
+        this.fieldMetadata = fieldMetadata
+      }
+    }
+
+    class FieldMetaData {
+      constructor() {
+        this.name
+        this.regex
+        this.required
+        this.prompt
+        this.isDate
+      }
+    }
+
+    class Element {
+      constructor(fields, links) {
+        this.fields = fields
+        this.links = links
+        this.affordance
+        this.subElements
+      }
+
+      getValueOfField(name) {
+        let i = 0, len = this.fields.length;
+        for (; i < len; i++) {
+          if (this.fields[i].name === name) {
+            return this.fields[i].value
+          }
+        }
+      }
+
+      getLinkByRel(rel) {
+        return this.links.getLinkByRel(rel)
       }
 
       canCreateResource() {
@@ -17,96 +76,48 @@
       }
 
       canDo(method) {
-        let i = 0, len = this.affordances.length;
-        for (; i < len; i++) {
-          var affordance = this.affordances[i]
-          if (affordance.method === method) {
-            return true
-          }
+        if (this.affordance.method === method) {
+          return true
         }
         return false
       }
-    }
+   }
 
-  class Affordance {
-    constructor(method, fieldMetadata) {
-      this.method = method
-      this.fieldMetadata = fieldMetadata
-    }
-  }
-
-  class FieldMetaData {
-    constructor() {
-      this.name
-      this.regex
-      this.required
-      this.prompt
-      this.isDate
-    }
-  }
-
-  class Element {
-    constructor(fields, links) {
-      this.fields = fields
-      this.links = links
-      this.affordance
-    }
-
-    getValueOfField(name) {
-      let i = 0, len = this.fields.length;
-      for (; i < len; i++) {
-        if (this.fields[i].name === name) {
-          return this.fields[i].value
-        }
+    class Field {
+      constructor(name, value) {
+        this.name = name
+        this.value = value
       }
     }
 
-    getLinkByRel(rel) {
-      return this.links.getLinkByRel(rel)
-    }
-
-    canCreateResource() {
-      return this.canDo("post")
-    }
-
-
-    canUpdateResource() {
-      return this.canDo("put")
-    }
-
-    canDo(method) {
-      if (this.affordance.method === method) {
-        return true
+    class Links {
+      constructor() {
+        this.elements = []
       }
-      return false
-    }
- }
 
-  class Field {
-    constructor(name, value) {
-      this.name = name
-      this.value = value
-    }
-  }
+      getNonSelfLinks() {
+        var nonSelfLinks = []
+        this.elements.forEach(l => {
+          if (l.rel !== 'self') {
+            nonSelfLinks.push(l.url)
+          }
+        })
+        return nonSelfLinks
+      }
 
-  class Links {
-    constructor() {
-      this.elements = []
-    }
+      addNewLink(link) {
+        this.elements.push(link)
+      }
 
-    addNewLink(link) {
-      this.elements.push(link)
-    }
-
-      getLinkByRel(rel) {
-        let i = 0, len = this.elements.length;
-        for (; i < len; i++) {
-          if (this.elements[i].rel === rel) {
-            return this.elements[i].url;
+        getLinkByRel(rel) {
+          let i = 0, len = this.elements.length;
+          for (; i < len; i++) {
+            if (this.elements[i].rel === rel) {
+              return this.elements[i].url;
+            }
           }
         }
-      }
-  }
+    }
 }
 
 start = "{" result: (collection / single) "}" {return result }

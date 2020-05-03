@@ -1,6 +1,5 @@
 package com.zprogress.controller.goal;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zprogress.domain.Goal;
 import org.springframework.hateoas.server.core.Relation;
 
@@ -12,7 +11,6 @@ import java.time.LocalDate;
 @Relation(collectionRelation = "goals")
 public class GoalDTO implements Serializable {
 
-    @JsonIgnore
     private Long id;
 
     @NotNull

@@ -34,6 +34,7 @@ public class GoalController {
         return ResponseEntity.ok(body);
     }
 
+    // TODO don't forget user context
     @GetMapping("/{goalId}")
     public GoalEntityModel getGoal(@PathVariable Long goalId) {
         var goal = goalService.get(goalId);

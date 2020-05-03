@@ -13,7 +13,7 @@ declare var peg$parse: any;
 export class MainComponent implements OnInit {
 
   content: any;
-  selectedContent: any;
+  selectedElement: any;
 
   constructor(private mainService: MainService,
               private authenticationService: AuthenticationService,
@@ -25,12 +25,27 @@ export class MainComponent implements OnInit {
       console.log(this.content);
     });
   }
-
   selectSingleResource(url: string) {
-    this.mainService.get(url).subscribe(res => {
-      this.selectedContent = peg$parse(JSON.stringify(res, null).replace(/\n/g, ''));
-      console.log(this.selectedContent);
-    });
+    this.selectedElement = null;
+    this.doSelectSingleResource(url);
+    console.log(this.selectedElement);
+  }
+
+  private doSelectSingleResource(url: string) {
+    this.mainService.get(url).subscribe(function(res) {
+      var parsedContent = peg$parse(JSON.stringify(res, null).replace(/\n/g, ''));
+      if (this.selectedElement != null) {
+        this.selectedElement.subElements = parsedContent.elements;
+        console.log(this.selectedElement.subElements);
+      } else {
+        this.selectedElement = parsedContent;
+        console.log(this.selectedElement);
+        let links = this.selectedElement.links.getNonSelfLinks();
+        for (let i = 0; i < links.length; i++) {
+          this.doSelectSingleResource(links[i]);
+        }
+      }
+    }.bind(this));
   }
 
   logout() {
