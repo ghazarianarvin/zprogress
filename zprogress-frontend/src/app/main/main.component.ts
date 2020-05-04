@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MainService} from '../shared/MainService';
 import {AuthenticationService} from '../shared/AuthenticationService';
 import {Router} from '@angular/router';
@@ -17,7 +17,8 @@ export class MainComponent implements OnInit {
 
   constructor(private mainService: MainService,
               private authenticationService: AuthenticationService,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit() {
     this.mainService.callBase().subscribe(res => {
@@ -25,27 +26,19 @@ export class MainComponent implements OnInit {
       console.log(this.content);
     });
   }
-  selectSingleResource(url: string) {
-    this.selectedElement = null;
-    this.doSelectSingleResource(url);
-    console.log(this.selectedElement);
-  }
 
-  private doSelectSingleResource(url: string) {
-    this.mainService.get(url).subscribe(function(res) {
-      var parsedContent = peg$parse(JSON.stringify(res, null).replace(/\n/g, ''));
-      if (this.selectedElement != null) {
-        this.selectedElement.subElements = parsedContent.elements;
-        console.log(this.selectedElement.subElements);
-      } else {
-        this.selectedElement = parsedContent;
-        console.log(this.selectedElement);
-        let links = this.selectedElement.links.getNonSelfLinks();
-        for (let i = 0; i < links.length; i++) {
-          this.doSelectSingleResource(links[i]);
-        }
+  selectSingleResourceAndFetchSubElements(element: any) {
+    this.mainService.get(element.getLinkByRel('self')).subscribe(function (res) {
+      let parsedContent = peg$parse(JSON.stringify(res, null).replace(/\n/g, ''));
+      let links = parsedContent.links.getNonSelfLinks();
+      this.selectedElement = parsedContent;
+      for (let link of links) {
+        this.mainService.get(link).subscribe(subElements => {
+          element.subElements = peg$parse(JSON.stringify(subElements, null).replace(/\n/g, '')).elements;
+        });
       }
     }.bind(this));
+    console.log(this.content);
   }
 
   logout() {

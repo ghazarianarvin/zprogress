@@ -18,16 +18,16 @@
       <div class="sidebar-sticky">
         <ul class="nav flex-column">
           <li class="nav-item"  *ngFor="let element of this.content.elements">
-            <a class="nav-link active" (click)="selectSingleResource(element.getLinkByRel('self'))">
+            <a class="nav-link active" (click)="selectSingleResourceAndFetchSubElements(element)">
               {{element.getValueOfField('name')}}
             </a>
-            <ul class="nested" *ngIf="selectedElement != null && element.getValueOfField('id') === selectedElement.getValueOfField('id')">
-              <li *ngFor="let subElement of this.selectedElement.subElements"><i class="far fa-bell ic-w mr-1"></i>{{subElement.getValueOfField('name')}}</li>
+            <ul class="nested" *ngIf="element.subElements != null">
+              <li *ngFor="let subElement of element.subElements"><i class="far fa-bell ic-w mr-1"></i>{{subElement.getValueOfField('name')}}</li>
             </ul>
           </li>
         </ul>
         <button type="button" class="btn btn-primary" *ngIf="content.canCreateResource()">create new {{content.resource}}</button>
-        <button type="button" class="btn btn-success" *ngIf="selectedElement!= null  && selectedElement.canUpdateResource()">update {{selectedElement.getValueOfField('name')}}</button>
+        <button type="button" class="btn btn-success" *ngIf="selectedElement != null  && selectedElement.canUpdateResource()">update {{selectedElement.getValueOfField('name')}}</button>
       </div>
     </nav>
 
