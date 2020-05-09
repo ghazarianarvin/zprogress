@@ -10,11 +10,14 @@ import {RouterModule, Routes} from '@angular/router';
 import {MainComponent} from './main/main.component';
 import {AuthenticationService as AuthGuard} from './shared/AuthenticationService';
 import {MainService} from './shared/MainService';
+import { CreateComponent } from './create/create.component';
+import {DataService} from './shared/DataService';
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
-  {path: 'main', component: MainComponent, canActivate: [AuthGuard]},
+  {path: 'main', component: MainComponent, canActivate: [AuthGuard],
+    children: [{path: 'create', component: CreateComponent, outlet: 'mainContentPageOutlet'}]},
   { path: '**', redirectTo: '' }
 ];
 
@@ -22,14 +25,15 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     LoginComponent,
-    MainComponent
+    MainComponent,
+    CreateComponent
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule, FormsModule, HttpClientModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [AuthenticationService, MainService],
+  providers: [AuthenticationService, MainService, DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
