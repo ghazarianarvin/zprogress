@@ -12,7 +12,7 @@ declare var peg$parse: any;
 })
 export class MainComponent implements OnInit {
 
-  content: any;
+  rootResource: any;
   selectedElement: any;
 
   constructor(private mainService: MainService,
@@ -22,28 +22,33 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     this.mainService.callBase().subscribe(res => {
-      this.content = peg$parse(JSON.stringify(res, null).replace(/\n/g, ''));
-      console.log(this.content);
+      this.rootResource = peg$parse(JSON.stringify(res, null).replace(/\n/g, ''));
+      console.log(this.rootResource);
     });
   }
 
-  selectSingleResourceAndFetchSubElements(element: any) {
-    this.mainService.get(element.getLinkByRel('self')).subscribe(function (res) {
-      let parsedContent = peg$parse(JSON.stringify(res, null).replace(/\n/g, ''));
-      let links = parsedContent.links.getNonSelfLinks();
-      this.selectedElement = parsedContent;
+
+  logout() {
+    this.authenticationService.logout();
+    this.router.navigate(['/login']);
+  }
+
+  selectElement(element: any) {
+    this.mainService.get(element.getLinkByRel('self')).subscribe(function(res) {
+      let self = peg$parse(JSON.stringify(res, null).replace(/\n/g, ''));
+      element.links = self.links;
+      element.affordance = self.affordance;
+
+      let links = self.links.getNonSelfLinks();
       for (let link of links) {
         this.mainService.get(link).subscribe(subElements => {
           element.subElements = peg$parse(JSON.stringify(subElements, null).replace(/\n/g, '')).elements;
         });
       }
-    }.bind(this));
-    console.log(this.content);
-  }
 
-  logout() {
-    this.authenticationService.logout();
-    this.router.navigate(['/login']);
+      this.selectedElement = element;
+      console.log(this.selectedElement);
+    }.bind(this));
   }
 
 }

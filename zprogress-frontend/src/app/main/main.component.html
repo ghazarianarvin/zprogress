@@ -17,18 +17,20 @@
     <nav class="col-md-2 d-none d-md-block bg-light sidebar">
       <div class="sidebar-sticky">
         <ul class="nav flex-column">
-          <li class="nav-item"  *ngFor="let element of this.content.elements">
-            <a class="nav-link active" (click)="selectSingleResourceAndFetchSubElements(element)">
+          <li class="nav-item"  *ngFor="let element of rootResource.elements">
+            <a class="nav-link" (click)="selectElement(element)">
               {{element.getValueOfField('name')}}
             </a>
             <ul class="nested" *ngIf="element.subElements != null">
-              <li *ngFor="let subElement of element.subElements"><i class="far fa-bell ic-w mr-1"></i>{{subElement.getValueOfField('name')}}</li>
+              <li *ngFor="let subElement of element.subElements">
+                <a class="nav-link" (click)="selectElement(subElement)">{{subElement.getValueOfField('name')}}</a>
+              </li>
             </ul>
           </li>
         </ul>
-        <button type="button" class="btn btn-primary" *ngIf="content.canCreateResource()">create new {{content.resource}}</button>
-        <button type="button" class="btn btn-success" *ngIf="selectedElement != null  && selectedElement.canUpdateResource()">update {{selectedElement.getValueOfField('name')}}</button>
       </div>
+      <button type="button" class="btn" *ngIf="rootResource.canCreateResource()">create new {{rootResource.resource}}</button>
+      <button type="button" class="btn" *ngIf="selectedElement != null && selectedElement.canUpdateResource()">update {{selectedElement.getValueOfField('name')}}</button>
     </nav>
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
