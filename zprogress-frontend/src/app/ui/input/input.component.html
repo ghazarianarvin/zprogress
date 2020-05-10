@@ -1,0 +1,13 @@
+
+<div *ngIf="renderInput()" class="form-group" style="padding: 20px">
+  <label class="control-label col-sm-2" [for]="getName()">{{getName()}}:</label>
+  <div class="col-sm-10">
+    <input class="form-control" [required]="isFieldRequired()" [id]="getName()" [name]="getName()" *ngIf="!isDate(); else dateInput">
+    <ng-template #dateInput>
+      <input class="form-control" [required]="isFieldRequired()" [id]="getName()" [name]="getName()" [matDatepicker]="myDatepicker">
+      <mat-datepicker-toggle [for]="myDatepicker"></mat-datepicker-toggle>
+      <mat-datepicker #myDatepicker></mat-datepicker>
+    </ng-template>
+  </div>
+</div>
+

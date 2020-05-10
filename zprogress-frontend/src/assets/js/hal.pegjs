@@ -42,6 +42,11 @@
         this.required
         this.prompt
         this.isDate
+        this.isFutureDate
+      }
+
+      getTrimmedFieldName() {
+        return this.name.replace(/d[fp]?_/g, '')
       }
     }
 
@@ -190,6 +195,11 @@ metadata = metadata: ("{" field+ "}" ","?)
       fieldMetadata.name = mdFields[i].value
       if (fieldMetadata.name.startsWith("d_") || fieldMetadata.name.startsWith("df_") || fieldMetadata.name.startsWith("dp_")) {
         fieldMetadata.isDate = true
+        if (fieldMetadata.name.startsWith("df_")) {
+          fieldMetadata.isFutureDate = true
+        } else {
+          fieldMetadata.isFutureDate = false
+        }
       } else {
         fieldMetadata.isDate = false
       }

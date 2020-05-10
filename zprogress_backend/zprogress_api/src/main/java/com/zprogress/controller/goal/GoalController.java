@@ -50,7 +50,6 @@ public class GoalController {
         return new ResponseEntity<>(new GoalEntityModel(new GoalDTO(new Goal()), false), HttpStatus.CREATED);
     }
 
-    // TODO: afford with get goal/1
     @PutMapping("/{goalId}")
     public ResponseEntity<GoalEntityModel> putGoal(@PathVariable Long goalId, @RequestBody GoalDTO goal) {
 //        var newGoal = goal.getContent();

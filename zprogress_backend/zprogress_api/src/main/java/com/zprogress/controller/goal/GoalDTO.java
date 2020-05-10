@@ -22,11 +22,11 @@ public class GoalDTO implements Serializable {
     private String description;
 
     @NotNull
-    private LocalDate d_deadline;
+    private LocalDate df_deadline;
 
     public GoalDTO(Goal goal) {
         this.setName(goal.getName());
-        this.setD_deadline(goal.getDeadline());
+        this.setDf_deadline(goal.getDeadline());
         this.setDescription(goal.getDescription());
         this.setId(goal.getId());
     }
@@ -47,12 +47,12 @@ public class GoalDTO implements Serializable {
         this.description = description;
     }
 
-    public LocalDate getD_deadline() {
-        return d_deadline;
+    public LocalDate getDf_deadline() {
+        return df_deadline;
     }
 
-    public void setD_deadline(LocalDate d_deadline) {
-        this.d_deadline = d_deadline;
+    public void setDf_deadline(LocalDate df_deadline) {
+        this.df_deadline = df_deadline;
     }
 
     public Long getId() {

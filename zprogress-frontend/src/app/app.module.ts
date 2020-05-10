@@ -12,6 +12,9 @@ import {AuthenticationService as AuthGuard} from './shared/AuthenticationService
 import {MainService} from './shared/MainService';
 import { CreateComponent } from './create/create.component';
 import {DataService} from './shared/DataService';
+import { InputComponent } from './ui/input/input.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {MatDatepickerModule, MatFormFieldModule, MatNativeDateModule} from '@angular/material';
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -26,12 +29,14 @@ const routes: Routes = [
     AppComponent,
     LoginComponent,
     MainComponent,
-    CreateComponent
+    CreateComponent,
+    InputComponent
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule, FormsModule, HttpClientModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    NoopAnimationsModule, MatDatepickerModule, MatNativeDateModule, MatFormFieldModule
   ],
   providers: [AuthenticationService, MainService, DataService],
   bootstrap: [AppComponent]

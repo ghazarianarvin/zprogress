@@ -1,5 +1,6 @@
 package com.zprogress.controller.step;
 
+import com.zprogress.controller.goal.GoalDTO;
 import com.zprogress.domain.Step;
 import com.zprogress.domain.exception.GoalNotFoundValidationException;
 import com.zprogress.domain.services.StepService;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
+//TODO use clientContext
 @Validated
 @RestController
 public class StepController {
@@ -34,7 +36,12 @@ public class StepController {
 
     @GetMapping("/goals/{goalId}/steps/{stepId}")
     public StepEntityModel getStep(@PathVariable Long goalId, @PathVariable Long stepId) {
-        return new StepEntityModel(null, goalId,false);
+        //TODO new step service method with goalId and stepID
+        var step = stepService.getByGoalId(goalId).stream().filter(s -> s.getId() == stepId).findFirst();
+        if (step.isPresent()) {
+            return new StepEntityModel(new StepDTO(step.get()), goalId,false);
+        }
+        return null;
     }
 
     // TODO don't return body --> put id in location
@@ -46,6 +53,14 @@ public class StepController {
         } catch (GoalNotFoundValidationException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @PutMapping("/goals/{goalId}/steps/{stepId}")
+    public ResponseEntity<StepEntityModel> putStep(@PathVariable Long goalId, @PathVariable Long stepId, @RequestBody GoalDTO goal) {
+//        var newGoal = goal.getContent();
+//        newGoal.setUsername(clientContext.getUsername());
+//        newGoal = goalService.create(newGoal);
+        return new ResponseEntity<>(new StepEntityModel(new StepDTO(new Step()), goalId, false), HttpStatus.CREATED);
     }
 
     private StepService stepService;
