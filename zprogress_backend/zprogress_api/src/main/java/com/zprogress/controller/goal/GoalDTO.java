@@ -24,6 +24,8 @@ public class GoalDTO implements Serializable {
     @NotNull
     private LocalDate df_deadline;
 
+    public GoalDTO() {}
+
     public GoalDTO(Goal goal) {
         this.setName(goal.getName());
         this.setDf_deadline(goal.getDeadline());

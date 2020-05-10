@@ -1,14 +1,13 @@
 <div>
   <div *ngFor="let affordance of affordances">
     <div *ngFor="let fmd of affordance.fieldMetadata">
-      <app-input [fieldMetadata]="fmd"></app-input>
+      <app-input [fieldMetadata]="fmd" (onValueChange)="fieldValue[fmd.name]=$event"></app-input>
     </div>
     <div style="padding: 20px">
       <label class="control-label col-sm-2"></label>
       <div class="col-sm-10">
-        <input class="form-control" type="button" class="btn btn-primary" value="create">
+        <input class="form-control" type="button" class="btn btn-primary" value="create" (click)="post()">
       </div>
     </div>
-
   </div>
 </div>

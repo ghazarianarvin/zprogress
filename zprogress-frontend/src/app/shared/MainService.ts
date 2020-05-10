@@ -6,17 +6,24 @@ import {AuthenticationService} from './AuthenticationService';
 @Injectable()
 export class MainService {
 
-  private url = 'http://localhost:8080/goals';
+  url = 'http://localhost:8080/goals';
 
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) {
   }
 
+  getBaseUrl() {
+    return this.url;
+  }
   callBase() {
     return this.http.get(this.url, this.header());
   }
 
   get(url) {
     return this.http.get(url, this.header());
+  }
+
+  post(url, body) {
+    return this.http.post(url, body, this.header());
   }
 
   private header() {

@@ -25,7 +25,10 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.mainService.callBase().subscribe(res => {
       this.rootResource = peg$parse(JSON.stringify(res, null).replace(/\n/g, ''));
-      this.dataService.currentAffordances = this.rootResource.affordances;
+      this.dataService.currentAffordances = {
+        url: this.mainService.getBaseUrl(),
+        affordances: this.rootResource.affordances
+      };
       console.log(this.rootResource);
     });
   }
