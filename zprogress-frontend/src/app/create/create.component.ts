@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {DataService} from '../shared/DataService';
 import {MainService} from '../shared/MainService';
+import {InputComponent} from '../ui/input/input.component';
 
 @Component({
   selector: 'app-create',
@@ -9,8 +10,10 @@ import {MainService} from '../shared/MainService';
 })
 export class CreateComponent implements OnInit {
 
+  @ViewChildren(InputComponent) inputs: QueryList<InputComponent>
   affordances: any;
-  fieldValue = {};
+  requestBody = {};
+  postDisabled = false;
 
   constructor(private dataService: DataService,
               private mainService: MainService) { }
@@ -20,9 +23,25 @@ export class CreateComponent implements OnInit {
   }
 
   post() {
-    console.log(this.fieldValue);
-    this.mainService.post(this.dataService.currentAffordances.url, this.fieldValue).subscribe(res => {
+    console.log(this.requestBody);
+    this.mainService.post(this.dataService.currentAffordances.url, this.requestBody).subscribe(res => {
       console.log(res);
     });
+  }
+
+  checkInputValidity() {
+    let foundOneInvalid = false;
+    this.inputs.forEach(input => {
+      input.validateThis();
+      if (!input.isInputValid) {
+        foundOneInvalid = true;
+        return;
+      }
+    });
+    this.postDisabled = foundOneInvalid;
+  }
+
+  resetPostButton() {
+    this.postDisabled = false;
   }
 }

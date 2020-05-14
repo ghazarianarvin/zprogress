@@ -2,11 +2,13 @@
 <div *ngIf="renderInput()" class="form-group" style="padding: 20px">
   <label class="control-label col-sm-2" [for]="getName()">{{getName()}}:</label>
   <div class="col-sm-10">
-    <input class="form-control" [required]="isFieldRequired()" [id]="getName()" [name]="getName()"
+    <span *ngIf="!isNotEmpty" class="error text-danger" style="display: block">Missing input</span>
+    <input class="form-control" [id]="getName()" [name]="getName()"
            [(ngModel)]="value" (change)="valueChanged(false)" *ngIf="!isDate(); else dateInput">
     <ng-template #dateInput>
-      <input class="form-control" [required]="isFieldRequired()" [id]="getName()"
-             [name]="getName()" [(ngModel)]="value" (ngModelChange)="valueChanged(true)"
+      <span *ngIf="!isDateValid" class="error text-danger">Invalid date</span>
+      <input class="form-control" [id]="getName()" [name]="getName()" (change)="valueChanged(true)"
+             [(ngModel)]="value" (ngModelChange)="valueChanged(true)"
              [min]="isFutureDate() ? minFutureDate() : null" [matDatepicker]="myDatepicker">
       <mat-datepicker-toggle [for]="myDatepicker"></mat-datepicker-toggle>
       <mat-datepicker #myDatepicker></mat-datepicker>

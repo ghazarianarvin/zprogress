@@ -11,6 +11,10 @@ export class InputComponent implements OnInit {
   @Output() onValueChange = new EventEmitter<any>();
   value: any;
 
+  isDateValid = true;
+  isNotEmpty = true;
+  isInputValid = true;
+
   constructor() {
   }
 
@@ -38,16 +42,39 @@ export class InputComponent implements OnInit {
   }
 
   minFutureDate() {
-    let today = new Date();
+    const today = new Date();
     today.setDate(today.getDate() + 10);
     return today;
   }
 
+  validateThis() {
+    this.resetValidationFields();
+    if (this.isDate()) {
+      if ((this.value == null || this.value == undefined) || (this.isFutureDate() && this.value <= this.minFutureDate())) {
+        this.isDateValid = false;
+      }
+    } else if (this.isFieldRequired() && (!this.value || this.value.length == 0)) {
+      this.isNotEmpty = false;
+    }
+
+    this.isInputValid = this.isDateValid && this.isNotEmpty;
+  }
+
+  private resetValidationFields() {
+    this.isDateValid = true;
+    this.isInputValid = true;
+    this.isNotEmpty = true;
+  }
+
   valueChanged(isDate: boolean) {
-    if (isDate) {
-      this.onValueChange.emit(this.value.toJSON());
-    } else {
-      this.onValueChange.emit(this.value);
+    console.log('value change triggered', {input: this.value, type: typeof this.value});
+    this.validateThis();
+    if (this.value != null) {
+      if (isDate) {
+        this.onValueChange.emit(this.value.toJSON());
+      } else {
+        this.onValueChange.emit(this.value);
+      }
     }
   }
 }
