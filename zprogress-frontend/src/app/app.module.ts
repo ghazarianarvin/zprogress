@@ -4,16 +4,15 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {LoginComponent} from './login/login.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {AuthenticationService} from './shared/AuthenticationService';
+import {AuthenticationService, AuthenticationService as AuthGuard} from './shared/AuthenticationService';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule, Routes} from '@angular/router';
 import {MainComponent} from './main/main.component';
-import {AuthenticationService as AuthGuard} from './shared/AuthenticationService';
 import {MainService} from './shared/MainService';
-import { CreateComponent } from './create/create.component';
+import {CreateComponent} from './create/create.component';
 import {DataService} from './shared/DataService';
-import { InputComponent } from './ui/input/input.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {InputComponent} from './ui/input/input.component';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MatDatepickerModule, MatFormFieldModule, MatNativeDateModule} from '@angular/material';
 
 const routes: Routes = [

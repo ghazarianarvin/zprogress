@@ -23,6 +23,14 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.refreshBase();
+    this.dataService.newResourceEvent.subscribe(res => this.rootResource.elements.push(
+      peg$parse(JSON.stringify(res, null).replace(/\n/g, '')))
+    );
+  }
+
+
+  private refreshBase() {
     this.mainService.callBase().subscribe(res => {
       this.rootResource = peg$parse(JSON.stringify(res, null).replace(/\n/g, ''));
       this.dataService.currentAffordances = {
@@ -33,7 +41,6 @@ export class MainComponent implements OnInit {
     });
   }
 
-
   logout() {
     this.authenticationService.logout();
     this.router.navigate(['/login']);
@@ -41,12 +48,12 @@ export class MainComponent implements OnInit {
 
   selectElement(element: any) {
     this.mainService.get(element.getLinkByRel('self')).subscribe(function(res) {
-      let self = peg$parse(JSON.stringify(res, null).replace(/\n/g, ''));
+      const self = peg$parse(JSON.stringify(res, null).replace(/\n/g, ''));
       element.links = self.links;
       element.affordance = self.affordance;
 
-      let links = self.links.getNonSelfLinks();
-      for (let link of links) {
+      const links = self.links.getNonSelfLinks();
+      for (const link of links) {
         this.mainService.get(link).subscribe(subElements => {
           element.subElements = peg$parse(JSON.stringify(subElements, null).replace(/\n/g, '')).elements;
         });

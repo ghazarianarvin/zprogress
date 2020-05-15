@@ -1,5 +1,8 @@
 <div>
   <div *ngFor="let affordance of affordances">
+    <div class="alert alert-primary" role="alert" *ngIf="successMessage != null">
+      {{successMessage}}
+    </div>
     <div *ngFor="let fmd of affordance.fieldMetadata">
       <app-input [fieldMetadata]="fmd" (onValueChange)="requestBody[fmd.name]=$event"></app-input>
     </div>

@@ -1,5 +1,6 @@
 package com.zprogress.controller.goal;
 
+import com.zprogress.domain.DomainTransformer;
 import com.zprogress.domain.Goal;
 import org.springframework.hateoas.server.core.Relation;
 
@@ -9,7 +10,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Relation(collectionRelation = "goals")
-public class GoalDTO implements Serializable {
+public class GoalDTO implements DomainTransformer<Goal>, Serializable {
 
     private Long id;
 
@@ -63,5 +64,14 @@ public class GoalDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public Goal toDomainType() {
+        var goal = new Goal();
+        goal.setDeadline(this.df_deadline);
+        goal.setDescription(this.description);
+        goal.setName(this.name);
+        return goal;
     }
 }

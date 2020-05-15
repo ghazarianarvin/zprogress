@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {map} from 'rxjs/operators';
 import {AuthenticationService} from './AuthenticationService';
 
 @Injectable()
@@ -14,6 +13,7 @@ export class MainService {
   getBaseUrl() {
     return this.url;
   }
+
   callBase() {
     return this.http.get(this.url, this.header());
   }

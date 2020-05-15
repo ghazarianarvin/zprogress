@@ -44,10 +44,10 @@ public class GoalController {
     // TODO don't return body --> put id in location
     @PostMapping
     public ResponseEntity<GoalEntityModel> postGoal(@RequestBody GoalDTO goal) {
-//        var newGoal = goal.getContent();
-//        newGoal.setUsername(clientContext.getUsername());
-//        newGoal = goalService.create(newGoal);
-        return new ResponseEntity<>(new GoalEntityModel(new GoalDTO(new Goal()), false), HttpStatus.CREATED);
+        var newGoal = goal.toDomainType();
+        newGoal.setUsername(clientContext.getUsername());
+        newGoal = goalService.create(newGoal);
+        return new ResponseEntity<>(new GoalEntityModel(new GoalDTO(newGoal), false), HttpStatus.CREATED);
     }
 
     @PutMapping("/{goalId}")

@@ -67,7 +67,6 @@ export class InputComponent implements OnInit {
   }
 
   valueChanged(isDate: boolean) {
-    console.log('value change triggered', {input: this.value, type: typeof this.value});
     this.validateThis();
     if (this.value != null) {
       if (isDate) {

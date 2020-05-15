@@ -14,6 +14,7 @@ export class CreateComponent implements OnInit {
   affordances: any;
   requestBody = {};
   postDisabled = false;
+  successMessage: string;
 
   constructor(private dataService: DataService,
               private mainService: MainService) { }
@@ -23,9 +24,9 @@ export class CreateComponent implements OnInit {
   }
 
   post() {
-    console.log(this.requestBody);
-    this.mainService.post(this.dataService.currentAffordances.url, this.requestBody).subscribe(res => {
-      console.log(res);
+    return this.mainService.post(this.dataService.currentAffordances.url, this.requestBody).subscribe(res => {
+      this.successMessage = 'resource successfully created.';
+      this.dataService.newResourceEvent.emit(res);
     });
   }
 
