@@ -127,7 +127,7 @@
 
 start = "{" result: (collection / single) "}" {return result }
 
-single = fields: (field+) links: links? "," ? affordances: affordances
+single = fields: (field*) links: links? "," ? affordances: affordances
 {
 	var element = new Element(fields, links)
     element.affordance = affordances[0]

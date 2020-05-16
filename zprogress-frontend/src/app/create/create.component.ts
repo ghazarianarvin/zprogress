@@ -1,7 +1,9 @@
-import {AfterViewInit, Component, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {DataService} from '../shared/DataService';
 import {MainService} from '../shared/MainService';
 import {InputComponent} from '../ui/input/input.component';
+
+declare var peg$parse: any;
 
 @Component({
   selector: 'app-create',
@@ -10,7 +12,7 @@ import {InputComponent} from '../ui/input/input.component';
 })
 export class CreateComponent implements OnInit {
 
-  @ViewChildren(InputComponent) inputs: QueryList<InputComponent>
+  @ViewChildren(InputComponent) inputs: QueryList<InputComponent>;
   affordances: any;
   requestBody = {};
   postDisabled = false;
@@ -26,7 +28,9 @@ export class CreateComponent implements OnInit {
   post() {
     return this.mainService.post(this.dataService.currentAffordances.url, this.requestBody).subscribe(res => {
       this.successMessage = 'resource successfully created.';
-      this.dataService.newResourceEvent.emit(res);
+      this.dataService.newResourceEvent.emit(
+        peg$parse(JSON.stringify(res, null).replace(/\n/g, ''))
+      );
     });
   }
 

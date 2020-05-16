@@ -24,9 +24,7 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     this.refreshBase();
-    this.dataService.newResourceEvent.subscribe(res => this.rootResource.elements.push(
-      peg$parse(JSON.stringify(res, null).replace(/\n/g, '')))
-    );
+    this.dataService.newResourceEvent.subscribe(newRes => this.rootResource.elements.push(newRes));
   }
 
 
