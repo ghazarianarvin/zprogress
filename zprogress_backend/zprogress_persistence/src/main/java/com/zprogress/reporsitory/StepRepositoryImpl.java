@@ -4,11 +4,11 @@ import com.zprogress.domain.Repetition;
 import com.zprogress.domain.Step;
 import com.zprogress.domain.repository.StepRepository;
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 
-import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -24,8 +24,8 @@ public class StepRepositoryImpl extends AbstractRepository implements StepReposi
 
     private static final StepResultSetHandler stepResultSetHandler = new StepResultSetHandler();
 
-    public StepRepositoryImpl(DataSource dataSource) {
-        super(dataSource);
+    public StepRepositoryImpl(JdbcTemplate jdbcTemplate) {
+        super(jdbcTemplate);
     }
 
     @Override

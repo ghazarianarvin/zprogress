@@ -14,6 +14,7 @@ import com.zprogress.service.impl.StepServiceImpl;
 import com.zprogress.service.impl.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
 
@@ -21,8 +22,12 @@ import javax.sql.DataSource;
 public class BeanConfiguration {
 
     @Bean
-    public GoalRepository goalRepository(DataSource dataSource) {
-        return new GoalRepositoryImpl(dataSource);
+    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+        return new JdbcTemplate(dataSource);
+    }
+    @Bean
+    public GoalRepository goalRepository(JdbcTemplate jdbcTemplate) {
+        return new GoalRepositoryImpl(jdbcTemplate);
     }
 
     @Bean
@@ -31,8 +36,8 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public StepRepository stepRepository(DataSource dataSource) {
-        return new StepRepositoryImpl(dataSource);
+    public StepRepository stepRepository(JdbcTemplate jdbcTemplate) {
+        return new StepRepositoryImpl(jdbcTemplate);
     }
 
     @Bean
@@ -41,8 +46,8 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public UserRepository userRepository(DataSource dataSource) {
-        return new UserRepositoryImpl(dataSource);
+    public UserRepository userRepository(JdbcTemplate jdbcTemplate) {
+        return new UserRepositoryImpl(jdbcTemplate);
     }
 
     @Bean

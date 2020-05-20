@@ -2,9 +2,9 @@ package com.zprogress.reporsitory;
 
 import com.zprogress.domain.User;
 import com.zprogress.domain.repository.UserRepository;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -15,8 +15,8 @@ public class UserRepositoryImpl extends AbstractRepository implements UserReposi
     private static final String SELECT_USER_NAME = "SELECT name, password from user where name = ?";
     private static final UserResultSetHandler userResultSetHandler = new UserResultSetHandler();
 
-    public UserRepositoryImpl(DataSource dataSource) {
-        super(dataSource);
+    public UserRepositoryImpl(JdbcTemplate jdbcTemplate) {
+        super(jdbcTemplate);
     }
 
     @Override

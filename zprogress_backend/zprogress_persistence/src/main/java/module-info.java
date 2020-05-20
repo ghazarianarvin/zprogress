@@ -4,7 +4,7 @@ module persistence {
     requires spring.context;
     requires spring.boot;
     requires java.sql;
-    requires spring.jdbc;
+    requires transitive spring.jdbc;
     requires spring.tx;
 
     exports com.zprogress.reporsitory;

@@ -3,11 +3,11 @@ package com.zprogress.reporsitory;
 import com.zprogress.domain.Goal;
 import com.zprogress.domain.repository.GoalRepository;
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 
-import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -22,8 +22,8 @@ public class GoalRepositoryImpl extends AbstractRepository implements GoalReposi
     private static final String SELECT_BY_USERNAME = "SELECT id, name, description, deadline, user_name from GOAL WHERE user_name = ?";
     private static final GoalResultSetHandler goalResultSetHandler = new GoalResultSetHandler();
 
-    public GoalRepositoryImpl(DataSource dataSource) {
-        super(dataSource);
+    public GoalRepositoryImpl(JdbcTemplate jdbcTemplate) {
+        super(jdbcTemplate);
     }
 
     @Override
