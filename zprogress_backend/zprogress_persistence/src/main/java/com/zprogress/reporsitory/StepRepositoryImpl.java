@@ -17,10 +17,10 @@ import java.util.List;
 public class StepRepositoryImpl extends AbstractRepository implements StepRepository {
 
     private static final String SELECT_BY_GOAL_ID = "SELECT id, goal_id, name, importance, startDate, " +
-            "repetitionType, nextReminderDate from Step WHERE goal_id = ?";
+            "repetitionType, nextReminderDate FROM Step WHERE goal_id = ? AND user_name = ?";
     private static final String INSERT_STEP =
             "INSERT INTO STEP (goal_id, name, importance, startDate, repetitionType, nextReminderDate) " +
-            "values (?, ?, ?, ?, ?, ?)";
+            "VALUES (?, ?, ?, ?, ?, ?)";
 
     private static final StepResultSetHandler stepResultSetHandler = new StepResultSetHandler();
 
