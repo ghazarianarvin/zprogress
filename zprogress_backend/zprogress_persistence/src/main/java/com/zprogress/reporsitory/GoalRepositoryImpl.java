@@ -15,11 +15,9 @@ import java.util.List;
 
 public class GoalRepositoryImpl extends AbstractRepository implements GoalRepository {
 
-    public static final String INSERT_GOAL = "INSERT INTO GOAL (name, description, deadline, user_name) values (?, ?, ?, ?)";
-    // TODO user predicate
-    private static final String SELECT_GOAL = "SELECT id, name, description, deadline, user_name from GOAL WHERE id = ?";
-    private static final String SELECT_ALL = "SELECT id, name, description, deadline, user_name from GOAL";
-    private static final String SELECT_BY_USERNAME = "SELECT id, name, description, deadline, user_name from GOAL WHERE user_name = ?";
+    private static final String INSERT_GOAL = "INSERT INTO GOAL (name, description, deadline, user_name) values (?, ?, ?, ?)";
+    private static final String SELECT_GOAL = "SELECT id, name, description, deadline, user_name FROM GOAL WHERE id = ? AND user_name = ?";
+    private static final String SELECT_ALL = "SELECT id, name, description, deadline, user_name FROM GOAL WHERE user_name = ?";
     private static final GoalResultSetHandler goalResultSetHandler = new GoalResultSetHandler();
 
     public GoalRepositoryImpl(JdbcTemplate jdbcTemplate) {
@@ -61,12 +59,6 @@ public class GoalRepositoryImpl extends AbstractRepository implements GoalReposi
     public List<Goal> getAll() {
         return jdbcTemplate.query(SELECT_ALL, (RowMapper<Goal>) goalResultSetHandler);
     }
-
-    @Override
-    public List<Goal> findByUsername(String username) {
-        return jdbcTemplate.query(SELECT_BY_USERNAME, (RowMapper<Goal>) goalResultSetHandler, username);
-    }
-
 
     private static class GoalResultSetHandler implements RowMapper<Goal>, ResultSetExtractor<Goal> {
 

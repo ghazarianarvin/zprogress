@@ -8,9 +8,8 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-
 // TODO move validation annotations to dto
-public class Step {
+public class Step extends Resource {
 
     private Long id;
 

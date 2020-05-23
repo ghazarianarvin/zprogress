@@ -35,9 +35,4 @@ public class GoalServiceImpl implements GoalService {
         return goalRepository.getById(id);
     }
 
-    @Override
-    public List<Goal> goals(String username) {
-        return goalRepository.findByUsername(username);
-    }
-
 }

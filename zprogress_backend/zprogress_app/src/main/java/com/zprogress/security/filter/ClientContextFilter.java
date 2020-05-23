@@ -16,7 +16,7 @@ import java.io.IOException;
 
 public class ClientContextFilter extends GenericFilterBean {
 
-    Logger logger = LoggerFactory.getLogger(ClientContextFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(ClientContextFilter.class);
     
     private JwtTokenService jwtTokenService;
     

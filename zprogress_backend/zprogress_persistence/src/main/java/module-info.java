@@ -8,5 +8,5 @@ module persistence {
     requires spring.tx;
 
     exports com.zprogress.reporsitory;
-
+    opens com.zprogress.reporsitory to spring.core;
 }

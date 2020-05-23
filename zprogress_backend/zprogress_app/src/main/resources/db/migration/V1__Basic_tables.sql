@@ -57,6 +57,8 @@ insert into goal (name, description, deadline, user_name) VALUES ('eat healthy',
 insert into goal (name, description, deadline, user_name) VALUES ('develop hard skills', 'develop hard skills', '2022-09-01', 'arvin');
 insert into goal (name, description, deadline, user_name) VALUES ('develop soft skills', 'develop soft skills', '2022-09-01', 'arvin');
 
+insert into goal (name, description, deadline, user_name) VALUES ('YOU SHOULD SEE THIS GOAL', 'NO PERMISSION...ACTUALLY!', '2022-09-01', 'argin');
+
 insert into step (goal_id, user_name, name, importance, startDate, repetitionType, nextReminderDate) VALUES (1, 'arvin', 'buy healthy food', 3, CURDATE(), 'WEEKLY', NOW() + INTERVAL 1 WEEK);
 insert into step (goal_id, user_name, name, importance, startDate, repetitionType, nextReminderDate) VALUES (1, 'arvin', 'cook in everything in the morning', 3, CURDATE(), 'DAILY', NOW() + INTERVAL 1 DAY);
 insert into step (goal_id, user_name, name, importance, startDate, repetitionType, nextReminderDate) VALUES (1, 'arvin', 'journal how you feel', 3, CURDATE(), 'DAILY', NOW() + INTERVAL 1 DAY);

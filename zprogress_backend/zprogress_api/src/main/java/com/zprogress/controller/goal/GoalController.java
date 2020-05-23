@@ -1,6 +1,5 @@
 package com.zprogress.controller.goal;
 
-import com.zprogress.controller.ClientContext;
 import com.zprogress.domain.Goal;
 import com.zprogress.domain.services.GoalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +16,11 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 @RequestMapping("/goals")
 public class GoalController {
 
-    private ClientContext clientContext;
     private GoalService goalService;
 
     @GetMapping
     public ResponseEntity<CollectionModel<GoalEntityModel>> goals() {
-        var goals = goalService.goals(clientContext.getUsername());
+        var goals = goalService.goals();
         var body = new CollectionModel(goals
                 .stream()
                 .map(goal -> new GoalEntityModel(new GoalDTO(goal), true))
@@ -34,7 +32,6 @@ public class GoalController {
         return ResponseEntity.ok(body);
     }
 
-    // TODO don't forget user context
     @GetMapping("/{goalId}")
     public GoalEntityModel getGoal(@PathVariable Long goalId) {
         var goal = goalService.get(goalId);
@@ -45,7 +42,6 @@ public class GoalController {
     @PostMapping
     public ResponseEntity<GoalEntityModel> postGoal(@RequestBody GoalDTO goal) {
         var newGoal = goal.toDomainType();
-        newGoal.setUsername(clientContext.getUsername());
         newGoal = goalService.create(newGoal);
         return new ResponseEntity<>(new GoalEntityModel(new GoalDTO(newGoal), false), HttpStatus.CREATED);
     }
@@ -61,10 +57,5 @@ public class GoalController {
     @Autowired
     public GoalService setGoalService(GoalService goalService) {
         return this.goalService = goalService;
-    }
-
-    @Autowired
-    public void setClientContext(ClientContext clientContext) {
-        this.clientContext = clientContext;
     }
 }

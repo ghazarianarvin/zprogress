@@ -2,13 +2,12 @@ package com.zprogress.domain;
 
 import java.time.LocalDate;
 
-public class Goal {
+public class Goal extends Resource {
 
     private Long id;
     private String name;
     private String description;
     private LocalDate deadline;
-    private String username;
 
     public Long getId() {
         return id;
@@ -40,14 +39,6 @@ public class Goal {
 
     public void setDeadline(LocalDate deadline) {
         this.deadline = deadline;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
 }

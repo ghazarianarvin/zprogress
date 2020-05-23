@@ -12,12 +12,17 @@ import com.zprogress.reporsitory.UserRepositoryImpl;
 import com.zprogress.service.impl.GoalServiceImpl;
 import com.zprogress.service.impl.StepServiceImpl;
 import com.zprogress.service.impl.UserServiceImpl;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
 
 import javax.sql.DataSource;
 
+//TODO: split RepositoryConfig, ServiceConfig, DataBaseConfig (JDBC, DATASOURCE, PREPAREDSTATEMENT)
 @Configuration
 public class BeanConfiguration {
 
@@ -53,6 +58,12 @@ public class BeanConfiguration {
     @Bean
     public UserService userService(UserRepository userRepository) {
         return new UserServiceImpl(userRepository);
+    }
+
+    @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE, proxyMode = ScopedProxyMode.TARGET_CLASS)
+    public PreparedStatementCreatorFactory PreparedStatementCreatorFactory() {
+        return new PreparedStatementCreatorFactory("");
     }
 
 }
