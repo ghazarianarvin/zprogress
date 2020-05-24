@@ -28,9 +28,11 @@ export class CreateComponent implements OnInit {
   post() {
     return this.mainService.post(this.dataService.currentAffordances.url, this.requestBody).subscribe(res => {
       this.successMessage = 'resource successfully created.';
-      this.dataService.newResourceEvent.emit(
-        peg$parse(JSON.stringify(res, null).replace(/\n/g, ''))
-      );
+      this.mainService.get(res.headers.get('Location')).subscribe(resource => {
+        this.dataService.newResourceEvent.emit(
+          peg$parse(JSON.stringify(resource, null).replace(/\n/g, ''))
+        );
+      });
     });
   }
 

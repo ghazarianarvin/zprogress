@@ -38,12 +38,12 @@ public class GoalController {
         return new GoalEntityModel(new GoalDTO(goal), false);
     }
 
-    // TODO don't return body --> put id in location
     @PostMapping
-    public ResponseEntity<GoalEntityModel> postGoal(@RequestBody GoalDTO goal) {
+    public ResponseEntity<?> postGoal(@RequestBody GoalDTO goal) {
         var newGoal = goal.toDomainType();
         newGoal = goalService.create(newGoal);
-        return new ResponseEntity<>(new GoalEntityModel(new GoalDTO(newGoal), false), HttpStatus.CREATED);
+        var link = linkTo(methodOn(GoalController.class).getGoal(newGoal.getId())).withSelfRel().expand();
+        return ResponseEntity.created(link.toUri()).build();
     }
 
     @PutMapping("/{goalId}")

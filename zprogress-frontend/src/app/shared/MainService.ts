@@ -23,7 +23,14 @@ export class MainService {
   }
 
   post(url, body) {
-    return this.http.post(url, body, this.header());
+    return this.http.post(url, body,
+      {
+        observe: 'response',
+        headers: new HttpHeaders({
+          'Content-Type': 'application/prs.hal-forms+json',
+          Authorization: 'Bearer ' + this.authenticationService.getJwtToke()
+        })
+    });
   }
 
   private header() {
